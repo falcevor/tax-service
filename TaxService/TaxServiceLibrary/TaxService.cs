@@ -9,15 +9,6 @@ namespace TaxServiceLibrary
 {
     public class TaxService : ITaxService
     {
-        public FinOperationInfo[] GetIncomes(int taxpayerId, DateTime from, DateTime to)
-        {
-            throw new NotImplementedException();
-        }
-
-        public FinOperationInfo[] GetPayments(int taxpayerId, DateTime from, DateTime to)
-        {
-            throw new NotImplementedException();
-        }
 
         public ReportTemplateInfo GetReportTemplateInfo(int templateId)
         {
