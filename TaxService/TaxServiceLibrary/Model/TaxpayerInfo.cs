@@ -4,17 +4,17 @@ namespace TaxServiceLibrary.Model
 {
     public class TaxpayerInfo
     {
-        public int id;
-        public string inn;
-        public string kpp;
-        public string name;
-        public string category;
-        public string taxType;
-        public int percent;
-        public string placeType;
-        public string placeAddress;
-        public DateTime beginDate;
-        public string additionalInfo;
-        public DocumentInfo[] documents;
+        public int Id { get; set; }
+        public string Inn { get; set; }
+        public string Kpp { get; set; }
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public string TaxType { get; set; }
+        public int Percent { get; set; }
+        public string PlaceType { get; set; }
+        public string PlaceAddress { get; set; }
+        public DateTime BeginDate { get; set; }
+        public string AdditionalInfo { get; set; }
+        public DocumentInfo[] Documents { get; set; }
     }
 }

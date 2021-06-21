@@ -1,20 +1,10 @@
-﻿using System.Runtime.Serialization;
-
-namespace TaxServiceLibrary.Model
+﻿namespace TaxServiceLibrary.Model
 {
-    [DataContract]
     public class ReportTemplateParameterInfo
     {
-        [DataMember]
-        public int id;
-
-        [DataMember]
-        public string name;
-
-        [DataMember]
-        public string description;
-
-        [DataMember]
-        public string defaultValue;
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string DefaultValue { get; set; }
     }
 }
