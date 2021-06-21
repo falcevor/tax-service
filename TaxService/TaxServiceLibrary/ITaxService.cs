@@ -1,26 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using TaxServiceLibrary.Model;
 
 namespace TaxServiceLibrary
 {
     public interface ITaxService
     {
-        int Login(string login, string password);
+        IAsyncEnumerable<TaxpayerInfo> GetTaxpayersAsync(int inspectorId);
 
-        TaxpayerInfo[] GetTaxpayerList(int inspectorId);
+        IAsyncEnumerable<ReportTemplateInfo> GetReportTemplatesAsync();
 
-        ReportTemplateInfo[] GetReportTemplateList();
+        Task<TaxpayerInfo> GetTaxpayerAsync(int taxpayerId);
 
-        TaxpayerInfo GetTaxpayerInfo(int taxpayerId);
+        Task<ReportTemplateInfo> GetReportTemplateAsync(int templateId);
 
-        ReportTemplateInfo GetReportTemplateInfo(int templateId);
+        Task<bool> SaveTaxpayerAsync(int inspectorId, TaxpayerInfo info);
 
-        bool SaveTaxpayerInfo(int inspectorId, TaxpayerInfo info);
+        Task<bool> SaveReportTemplateAsync(ReportTemplateInfo info);
 
-        bool SaveReportTemplateInfo(ReportTemplateInfo info);
+        IAsyncEnumerable<FinOperationInfo> GetIncomesAsync(int taxpayerId, DateTime from, DateTime to);
 
-        FinOperationInfo[] GetIncomes(int taxpayerId, DateTime from, DateTime to);
-
-        FinOperationInfo[] GetPayments(int taxpayerId, DateTime from, DateTime to);
+        IAsyncEnumerable<FinOperationInfo> GetPaymentsAsync(int taxpayerId, DateTime from, DateTime to);
     }
 }
