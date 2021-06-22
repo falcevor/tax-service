@@ -3,7 +3,7 @@ using NpgsqlTypes;
 using System;
 using System.Data;
 
-namespace TaxServiceDataAccess
+namespace TaxService.Data
 {
     public class PostgreTaxServiceDataProvider : IDisposable
     {
