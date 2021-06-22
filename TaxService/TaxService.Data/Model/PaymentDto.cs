@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace TaxService.Core.Model
+namespace TaxService.Data.Model
 {
-    public class FinOperation
+    public class PaymentDto
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }

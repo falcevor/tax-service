@@ -1,18 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TaxService.Core;
 using TaxService.Core.Model;
+using TaxService.Data.DataContext;
 
-namespace TaxService.Core
+namespace TaxService.Data
 {
     public class TaxRepository : ITaxRepository
     {
-        public IAsyncEnumerable<FinOperation> GetIncomesAsync(int taxpayerId, DateTime from, DateTime to)
+        private readonly AppDbContext _db;
+
+        public TaxRepository(AppDbContext db)
+        {
+            _db = db;
+        }
+
+        public IAsyncEnumerable<Income> GetIncomesAsync(int taxpayerId, DateTime from, DateTime to)
         {
             throw new NotImplementedException();
         }
 
-        public IAsyncEnumerable<FinOperation> GetPaymentsAsync(int taxpayerId, DateTime from, DateTime to)
+        public IAsyncEnumerable<Payment> GetPaymentsAsync(int taxpayerId, DateTime from, DateTime to)
         {
             throw new NotImplementedException();
         }

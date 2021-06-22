@@ -19,8 +19,8 @@ namespace TaxService.Core
 
         Task<bool> SaveReportTemplateAsync(ReportTemplate info);
 
-        IAsyncEnumerable<FinOperation> GetIncomesAsync(int taxpayerId, DateTime from, DateTime to);
+        IAsyncEnumerable<Income> GetIncomesAsync(int taxpayerId, DateTime from, DateTime to);
 
-        IAsyncEnumerable<FinOperation> GetPaymentsAsync(int taxpayerId, DateTime from, DateTime to);
+        IAsyncEnumerable<Payment> GetPaymentsAsync(int taxpayerId, DateTime from, DateTime to);
     }
 }
