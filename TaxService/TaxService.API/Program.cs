@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using TaxService.Configuration;
 
 namespace TaxService.API
 {
@@ -12,9 +13,11 @@ namespace TaxService.API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                .ConfigureWebHostDefaults(webBuilder => 
+                    webBuilder.UseStartup<Startup>()
+                )
+                .ConfigureAppConfiguration(configBuilder => 
+                    configBuilder.AddAppConfiguration("Development")
+                );
     }
 }

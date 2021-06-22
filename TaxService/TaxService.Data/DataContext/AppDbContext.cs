@@ -8,8 +8,8 @@ namespace TaxService.Data.DataContext
     public class AppDbContext : DbContext
     {
         public DbSet<DocumentDto> Documents { get; private set; }
-        public DbSet<IncomeDto> Payments { get; private set; }
-        public DbSet<PaymentDto> Incomes { get; private set; }
+        public DbSet<PaymentDto> Payments { get; private set; }
+        public DbSet<IncomeDto> Incomes { get; private set; }
         public DbSet<ReportTemplateDto> ReportTemplates { get; private set; }
         public DbSet<TaxpayerDto> Taxpayers { get; private set; }
 
