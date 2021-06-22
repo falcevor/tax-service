@@ -7,7 +7,7 @@ namespace TaxService.Data
 {
     public class PostgreTaxServiceDataProvider : IDisposable
     {
-        private const string CONNECTION_STRING = "User ID=postgres; Password=1234; Host=localhost; Port=5432; Database=TaxService;";
+        private const string CONNECTION_STRING = "";
         private NpgsqlConnection _conn;
 
         public PostgreTaxServiceDataProvider()
