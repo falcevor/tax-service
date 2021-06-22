@@ -2,7 +2,7 @@
 
 namespace TaxServiceLibrary.Model
 {
-    public class FinOperationInfo
+    public class FinOperation
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }

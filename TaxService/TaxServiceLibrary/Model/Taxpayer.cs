@@ -2,7 +2,7 @@
 
 namespace TaxServiceLibrary.Model
 {
-    public class TaxpayerInfo
+    public class Taxpayer
     {
         public int Id { get; set; }
         public string Inn { get; set; }
@@ -15,6 +15,6 @@ namespace TaxServiceLibrary.Model
         public string PlaceAddress { get; set; }
         public DateTime BeginDate { get; set; }
         public string AdditionalInfo { get; set; }
-        public DocumentInfo[] Documents { get; set; }
+        public Document[] Documents { get; set; }
     }
 }

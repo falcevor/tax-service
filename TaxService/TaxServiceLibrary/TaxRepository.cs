@@ -7,10 +7,10 @@ using TaxServiceLibrary.Model;
 
 namespace TaxServiceLibrary
 {
-    public class TaxService : ITaxService
+    public class TaxRepository : ITaxRepository
     {
 
-        public ReportTemplateInfo GetReportTemplateInfo(int templateId)
+        public ReportTemplate GetReportTemplateInfo(int templateId)
         {
             using (var provider = new PostgreTaxServiceDataProvider())
             {
@@ -22,12 +22,12 @@ namespace TaxServiceLibrary
                     DataRow row = data.Rows[0];
                  
                     var tempateId = Int32.Parse(row["id"].ToString());
-                    var templateParams = new List<ReportTemplateParameterInfo>();
+                    var templateParams = new List<ReportTemplateParameter>();
                     var paramList = provider.GetTemplateParameterInfoByTemplateId(tempateId);
 
                     foreach (var param in paramList.Rows.Cast<DataRow>())
                     {
-                        templateParams.Add(new ReportTemplateParameterInfo()
+                        templateParams.Add(new ReportTemplateParameter()
                         {
                             id = Int32.Parse(param["id"].ToString()),
                             name = param["name"].ToString(),
@@ -39,7 +39,7 @@ namespace TaxServiceLibrary
                     var template = row["file"] as byte[];
                     if (template == null) return null;
 
-                    var info = new ReportTemplateInfo()
+                    var info = new ReportTemplate()
                     {
                         id = tempateId,
                         name = row["name"].ToString(),
@@ -56,7 +56,7 @@ namespace TaxServiceLibrary
             }
         }
 
-        public TaxpayerInfo GetTaxpayerInfo(int taxpayerId)
+        public Taxpayer GetTaxpayerInfo(int taxpayerId)
         {
             using (var provider = new PostgreTaxServiceDataProvider())
             {
@@ -64,13 +64,13 @@ namespace TaxServiceLibrary
                 {
                     var data = provider.GetTaxpayerInfoById(taxpayerId);
                     var row = data.Rows.Cast<DataRow>().First();
-                    var attachs = new List<DocumentInfo>();
+                    var attachs = new List<Document>();
                     var docs = provider.GetDocumentsByTaxpayerId(Int32.Parse(row["id"].ToString()));
                     foreach (var docRow in docs.Rows.Cast<DataRow>())
                     {
                         var file = docRow["file"] as byte[];
                         if (file == null) continue;
-                        attachs.Add(new DocumentInfo()
+                        attachs.Add(new Document()
                         {
                             id = Int32.Parse(docRow["id"].ToString()),
                             name = docRow["name"].ToString(),
@@ -79,7 +79,7 @@ namespace TaxServiceLibrary
                         });
                     }
 
-                    var info = new TaxpayerInfo()
+                    var info = new Taxpayer()
                     {
                         id = Int32.Parse(row["id"].ToString()),
                         inn = row["inn"].ToString(),
@@ -121,7 +121,7 @@ namespace TaxServiceLibrary
             }
         }
 
-        public bool SaveReportTemplateInfo(ReportTemplateInfo info)
+        public bool SaveReportTemplateInfo(ReportTemplate info)
         {
             using (var provider = new PostgreTaxServiceDataProvider())
             {
@@ -153,7 +153,7 @@ namespace TaxServiceLibrary
             }
         }
 
-        public bool SaveTaxpayerInfo(int inspectorId, TaxpayerInfo info)
+        public bool SaveTaxpayerInfo(int inspectorId, Taxpayer info)
         {
             using (var provider = new PostgreTaxServiceDataProvider())
             {
@@ -189,24 +189,24 @@ namespace TaxServiceLibrary
             }
         }
 
-        ReportTemplateInfo[] ITaxService.GetReportTemplateList()
+        ReportTemplate[] ITaxRepository.GetReportTemplateList()
         {
             using (var provider = new PostgreTaxServiceDataProvider())
             {
                 try
                 {
-                    var result = new List<ReportTemplateInfo>();
+                    var result = new List<ReportTemplate>();
                     var data = provider.GetAllReportTemplates();
 
                     foreach (var row in data.Rows.Cast<DataRow>())
                     {
                         var tempateId = Int32.Parse(row["id"].ToString());
-                        var templateParams = new List<ReportTemplateParameterInfo>();
+                        var templateParams = new List<ReportTemplateParameter>();
                         var paramList = provider.GetTemplateParameterInfoByTemplateId(tempateId);
 
                         foreach (var param in paramList.Rows.Cast<DataRow>())
                         {
-                            templateParams.Add(new ReportTemplateParameterInfo()
+                            templateParams.Add(new ReportTemplateParameter()
                             {
                                 id = Int32.Parse(param["id"].ToString()),
                                 name = param["name"].ToString(),
@@ -218,7 +218,7 @@ namespace TaxServiceLibrary
                         var template = row["file"] as byte[];
                         if (template == null) continue;
 
-                        var info = new ReportTemplateInfo()
+                        var info = new ReportTemplate()
                         {
                             id = tempateId,
                             name = row["name"].ToString(),
@@ -237,24 +237,24 @@ namespace TaxServiceLibrary
             }
         }
 
-        TaxpayerInfo[] ITaxService.GetTaxpayerList(int inspectorId)
+        Taxpayer[] ITaxRepository.GetTaxpayerList(int inspectorId)
         {
             using (var provider = new PostgreTaxServiceDataProvider())
             {
                 try
                 {
-                    var result = new List<TaxpayerInfo>();
+                    var result = new List<Taxpayer>();
                     var data = provider.GetTaxpayersByInspectorId(inspectorId);
 
                     foreach (var row in data.Rows.Cast<DataRow>())
                     {
-                        var attachs = new List<DocumentInfo>();
+                        var attachs = new List<Document>();
                         var docs = provider.GetDocumentsByTaxpayerId(Int32.Parse(row["id"].ToString()));
                         foreach (var docRow in docs.Rows.Cast<DataRow>())
                         {
                             var file = docRow["file"] as byte[];
                             if (file == null) continue;
-                            attachs.Add(new DocumentInfo()
+                            attachs.Add(new Document()
                             {
                                 id = Int32.Parse(docRow["id"].ToString()),
                                 name = docRow["name"].ToString(),
@@ -263,7 +263,7 @@ namespace TaxServiceLibrary
                             });
                         }
 
-                        var info = new TaxpayerInfo()
+                        var info = new Taxpayer()
                         {
                             id = Int32.Parse(row["id"].ToString()),
                             inn = row["inn"].ToString(),
