@@ -1,4 +1,4 @@
-﻿namespace TaxServiceLibrary.Model
+﻿namespace TaxService.Core.Model
 {
     public class ReportTemplateParameter
     {

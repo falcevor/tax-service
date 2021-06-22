@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TaxServiceLibrary.Model
+namespace TaxService.Core.Model
 {
     public class FinOperation
     {
