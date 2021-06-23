@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.OpenApi.Models;
 using System.Linq;
 
 namespace TaxService.Extensions
@@ -11,8 +10,23 @@ namespace TaxService.Extensions
     {
         public static IServiceCollection AddAppSwaggerServices(this IServiceCollection services)
         {
-            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-            return services.AddSwaggerGen();
+            return services.AddSwaggerGen(opt =>
+            {
+                var serviceProvider = services.BuildServiceProvider();
+                var versionProvider = serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>();
+                versionProvider.ApiVersionDescriptions.ToList()
+                    .ForEach(desc => opt.SwaggerDoc(desc.GroupName, CreateApiInfo(desc)));
+
+            });
+        }
+
+        private static OpenApiInfo CreateApiInfo(ApiVersionDescription description)
+        {
+            return new OpenApiInfo()
+            {
+                Title = $"Tax Service API v{description.ApiVersion}",
+                Version = description.ApiVersion.ToString()
+            };
         }
 
         public static IApplicationBuilder UseAppSwaggerMiddleware(
@@ -20,12 +34,9 @@ namespace TaxService.Extensions
             IApiVersionDescriptionProvider provider)
         {
             builder.UseSwagger();
-            return builder.UseSwaggerUI(options =>
-                provider.ApiVersionDescriptions
-                    .ToList()
-                    .ForEach(description => options.SwaggerEndpoint(
-                        $"{description.GroupName}/swagger.json",
-                        description.GroupName.ToUpperInvariant())
+            return builder.UseSwaggerUI(opt =>
+                provider.ApiVersionDescriptions.ToList()
+                    .ForEach(desc => opt.SwaggerEndpoint($"{desc.GroupName}/swagger.json", desc.GroupName)
                 )
             );
         }
