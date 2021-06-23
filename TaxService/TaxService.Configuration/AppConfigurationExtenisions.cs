@@ -13,8 +13,8 @@ namespace TaxService.Configuration
                     c => c.AddUserSecrets(typeof(AppConfigurationExtenisions).Assembly)
                 )
                 .WithSubstitution(
-                    c => c.AddJsonFile("appsettings.json")
-                        .AddJsonFile($"appsettings.{env}.json", true)
+                    c => c.AddJsonFile($"appsettings.json",       optional: true, reloadOnChange: true)
+                          .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true)
                 );
 
             return builder;

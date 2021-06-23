@@ -5,10 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using TaxService.Core;
 
-namespace TaxService.API.Controllers
+namespace TaxService.Api.v1.Controllers
 {
     [ApiController]
-    [Route("[controller]/[action]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]/[action]")]
     public class TaxServiceController : ControllerBase
     {
         private readonly ITaxRepository _repo;
