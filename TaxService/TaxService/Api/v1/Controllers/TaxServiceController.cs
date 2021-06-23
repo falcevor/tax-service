@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TaxService.Core;
 
-namespace TaxService.Controllers.v1
+namespace TaxService.Api.v1.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
