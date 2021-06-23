@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TaxService.Core;
 using TaxService.Data;
 using TaxService.Data.DataContext;
 
-namespace TaxService.API
+namespace TaxService
 {
     public class Startup
     {

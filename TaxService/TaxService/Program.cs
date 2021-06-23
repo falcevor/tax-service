@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using TaxService.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace TaxService.API
+namespace TaxService
 {
     public class Program
     {
