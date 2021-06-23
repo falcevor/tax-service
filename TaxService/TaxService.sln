@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxService.API", "TaxService.API\TaxService.API.csproj", "{8C2BA077-B23C-4D9B-92F2-C16DAEC7E8DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxService", "TaxService.API\TaxService.csproj", "{8C2BA077-B23C-4D9B-92F2-C16DAEC7E8DC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxService.Core", "TaxService.Core\TaxService.Core.csproj", "{11786B90-F7AD-439B-A50F-1459A04011BE}"
 EndProject
@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxService.Data", "TaxServi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxService.Desktop", "TaxService.Desktop\TaxService.Desktop.csproj", "{15D6259F-C02B-45FB-8B7F-AE0B8BE47F2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxService.Configuration", "TaxService.Configuration\TaxService.Configuration.csproj", "{52FAADCB-2F51-48B7-BEA6-739B35671D51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxService.Configuration", "TaxService.Configuration\TaxService.Configuration.csproj", "{52FAADCB-2F51-48B7-BEA6-739B35671D51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
