@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TaxService.Core;
 using TaxService.Data;
 using TaxService.Data.DataContext;
+using TaxService.Extensions;
 
 namespace TaxService
 {
@@ -17,21 +19,20 @@ namespace TaxService
             services.AddTransient<ITaxRepository, TaxRepository>();
 
             services.AddControllers();
-            services.AddApiVersioning(options => {
-                options.ReportApiVersions = true;
-                options.AssumeDefaultVersionWhenUnspecified = true;
-                options.DefaultApiVersion = new ApiVersion(1, 0);
-                });
-            services.AddSwaggerGen();
+
+            services.AddAppApiVersioning();
+            services.AddAppSwaggerServices();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(
+            IApplicationBuilder app, 
+            IWebHostEnvironment env, 
+            IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseAppSwaggerMiddleware(provider);
             }
 
             app.UseRouting();
