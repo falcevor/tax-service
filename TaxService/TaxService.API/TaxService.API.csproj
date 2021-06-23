@@ -21,7 +21,5 @@
   <ItemGroup>
     <ProjectReference Include="..\TaxService.Data\TaxService.Data.csproj" />
   </ItemGroup>
-
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="..\..\..\templates\Schemas\appsettings.Serilog.json" /></VisualStudio></ProjectExtensions>
-
+  
 </Project>

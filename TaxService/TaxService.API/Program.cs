@@ -25,10 +25,6 @@ namespace TaxService.API
                 )
                 .ConfigureLogging(ConfigureLogging);
 
-        private static string GetEnvironment()
-        {
-            return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-        }
 
         private static void ConfigureLogging(ILoggingBuilder loggingBuilder)
         {
@@ -39,6 +35,11 @@ namespace TaxService.API
                 .ReadFrom.Configuration(config)
                 .CreateLogger();
             loggingBuilder.AddSerilog(logger);
+        }
+
+        private static string GetEnvironment()
+        {
+            return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
         }
     }
 }
