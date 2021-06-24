@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TaxService.Domain.Model;
 
-namespace TaxService.Domain
+namespace TaxService.Application.Repositories
 {
     public interface ITaxRepository
     {

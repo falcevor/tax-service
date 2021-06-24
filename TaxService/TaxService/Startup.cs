@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TaxService.Domain;
 using TaxService.Data;
 using TaxService.Data.DataContext;
 using TaxService.Extensions;
+using TaxService.Application.Repositories;
 
 namespace TaxService
 {

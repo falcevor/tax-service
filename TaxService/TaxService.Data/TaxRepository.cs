@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TaxService.Domain;
 using TaxService.Domain.Model;
 using TaxService.Data.DataContext;
 using AutoMapper;
@@ -9,6 +8,7 @@ using TaxService.Data.Model;
 using AutoMapper.QueryableExtensions;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using TaxService.Application.Repositories;
 
 namespace TaxService.Data
 {

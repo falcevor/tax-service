@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using TaxService.Domain;
+using TaxService.Application.Repositories;
 
 namespace TaxService.Api.v1.Controllers
 {
