@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace TaxService.Core.Model
+namespace TaxService.Domain.Model
 {
-    public class Income
+    public class Payment
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }

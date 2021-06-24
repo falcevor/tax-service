@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxService.Core", "TaxService.Core\TaxService.Core.csproj", "{11786B90-F7AD-439B-A50F-1459A04011BE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxService.Data", "TaxService.Data\TaxService.Data.csproj", "{407CF570-4F73-4360-9D5C-3548A090D8E5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxService.Desktop", "TaxService.Desktop\TaxService.Desktop.csproj", "{15D6259F-C02B-45FB-8B7F-AE0B8BE47F2B}"
@@ -13,16 +11,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxService.Configuration", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxService", "TaxService\TaxService.csproj", "{0CA20EF0-209F-4E78-ADEB-C4B423D45ED3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxService.Domain", "TaxService.Domain\TaxService.Domain.csproj", "{0CCF5CFC-1178-4A7F-9134-D2773B17346E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{11786B90-F7AD-439B-A50F-1459A04011BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{11786B90-F7AD-439B-A50F-1459A04011BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{11786B90-F7AD-439B-A50F-1459A04011BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{11786B90-F7AD-439B-A50F-1459A04011BE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{407CF570-4F73-4360-9D5C-3548A090D8E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{407CF570-4F73-4360-9D5C-3548A090D8E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{407CF570-4F73-4360-9D5C-3548A090D8E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{0CA20EF0-209F-4E78-ADEB-C4B423D45ED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CA20EF0-209F-4E78-ADEB-C4B423D45ED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CA20EF0-209F-4E78-ADEB-C4B423D45ED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CCF5CFC-1178-4A7F-9134-D2773B17346E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CCF5CFC-1178-4A7F-9134-D2773B17346E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CCF5CFC-1178-4A7F-9134-D2773B17346E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CCF5CFC-1178-4A7F-9134-D2773B17346E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TaxService.Core;
+using TaxService.Domain;
 using TaxService.Data;
 using TaxService.Data.DataContext;
 using TaxService.Extensions;

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TaxService.Core;
-using TaxService.Core.Model;
+using TaxService.Domain;
+using TaxService.Domain.Model;
 using TaxService.Data.DataContext;
 using AutoMapper;
 using TaxService.Data.Model;

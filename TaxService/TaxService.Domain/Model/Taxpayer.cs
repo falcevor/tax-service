@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TaxService.Core.Model
+namespace TaxService.Domain.Model
 {
     public class Taxpayer
     {

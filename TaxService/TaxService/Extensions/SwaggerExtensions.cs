@@ -20,15 +20,6 @@ namespace TaxService.Extensions
             });
         }
 
-        private static OpenApiInfo CreateApiInfo(ApiVersionDescription description)
-        {
-            return new OpenApiInfo()
-            {
-                Title = $"Tax Service API v{description.ApiVersion}",
-                Version = description.ApiVersion.ToString()
-            };
-        }
-
         public static IApplicationBuilder UseAppSwaggerMiddleware(
             this IApplicationBuilder builder, 
             IApiVersionDescriptionProvider provider)
@@ -39,6 +30,15 @@ namespace TaxService.Extensions
                     .ForEach(desc => opt.SwaggerEndpoint($"{desc.GroupName}/swagger.json", desc.GroupName)
                 )
             );
+        }
+
+        private static OpenApiInfo CreateApiInfo(ApiVersionDescription description)
+        {
+            return new OpenApiInfo()
+            {
+                Title = $"Tax Service API v{description.ApiVersion}",
+                Version = description.ApiVersion.ToString()
+            };
         }
     }
 }

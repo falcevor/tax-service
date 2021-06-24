@@ -30,7 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TaxService.Configuration\TaxService.Configuration.csproj" />
-    <ProjectReference Include="..\TaxService.Core\TaxService.Core.csproj" />
+    <ProjectReference Include="..\TaxService.Domain\TaxService.Domain.csproj" />
   </ItemGroup>
 
 </Project>
