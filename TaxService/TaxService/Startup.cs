@@ -3,10 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TaxService.Data;
-using TaxService.Data.DataContext;
+using TaxService.Application.Extensions;
+using TaxService.Data.Extensions;
 using TaxService.Extensions;
-using TaxService.Application.Repositories;
 
 namespace TaxService
 {
@@ -14,10 +13,10 @@ namespace TaxService
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>();
-            services.AddTransient<ITaxRepository, TaxRepository>();
-
             services.AddControllers();
+
+            services.AddApplicationLayer();
+            services.AddDataLayer();
 
             services.AddAppApiVersioning();
             services.AddAppSwaggerServices();
