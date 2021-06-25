@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using TaxService.Configuration;
+using TaxService.Infrastructure.Configuration;
 
 namespace TaxService.Data.DataContext
 {
-    public class AppContextDesignFactory : IDesignTimeDbContextFactory<AppDbContext>
+    public class AppDbContextDesignFactory : IDesignTimeDbContextFactory<AppDbContext>
     {
         public AppDbContext CreateDbContext(string[] args)
         {
