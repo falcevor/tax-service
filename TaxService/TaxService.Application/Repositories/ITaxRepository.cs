@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TaxService.Core.Model;
+using TaxService.Domain.Model;
 
-namespace TaxService.Core
+namespace TaxService.Application.Repositories
 {
     public interface ITaxRepository
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using StackExchange.Utils;
 
-namespace TaxService.Configuration
+namespace TaxService.Infrastructure.Configuration
 {
     public static class AppConfigurationExtenisions
     {

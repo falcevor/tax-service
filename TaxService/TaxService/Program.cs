@@ -3,8 +3,8 @@ using Serilog;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
-using TaxService.Configuration;
 using Microsoft.Extensions.Logging;
+using TaxService.Infrastructure.Configuration;
 
 namespace TaxService
 {

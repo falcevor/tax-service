@@ -1,10 +1,10 @@
-﻿namespace TaxService.Core.Model
+﻿namespace TaxService.Domain.Model
 {
-    public class Document
+    public class ReportTemplateParameter
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public byte[] File { get; set; }
+        public string DefaultValue { get; set; }
     }
 }

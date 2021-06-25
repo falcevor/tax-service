@@ -1,45 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TaxService.Core;
-using TaxService.Core.Model;
+using TaxService.Domain.Model;
 using TaxService.Data.DataContext;
 using AutoMapper;
 using TaxService.Data.Model;
-using AutoMapper.QueryableExtensions;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using TaxService.Application.Repositories;
 
 namespace TaxService.Data
 {
     public class TaxRepository : ITaxRepository
     {
         private readonly AppDbContext _db;
-        private readonly IConfigurationProvider _mapperConfig;
         private readonly IMapper _mapper;
 
-        public TaxRepository(AppDbContext db)
+        public TaxRepository(AppDbContext db, IMapper mapper)
         {
             _db = db;
-            _mapperConfig = new MapperConfiguration(config =>
-            {
-                config.CreateMap<DocumentDto, Document>();
-                config.CreateMap<IncomeDto, Income>();
-                config.CreateMap<PaymentDto, Payment>();
-                config.CreateMap<ReportTemplateDto, ReportTemplate>();
-                config.CreateMap<ReportTemplateParameterDto, ReportTemplateParameter>();
-                config.CreateMap<TaxpayerDto, Taxpayer>();
-                config.CreateMap<Taxpayer, TaxpayerDto>();
-                config.CreateMap<ReportTemplate, ReportTemplateDto>();
-            });
-            _mapper = _mapperConfig.CreateMapper();
+            _mapper = mapper;
         }
 
         public IAsyncEnumerable<Income> GetIncomesAsync(int taxpayerId, DateTime from, DateTime to)
         {
-            return _db.Incomes
-                .AsNoTracking()
-                .ProjectTo<Income>(_mapperConfig)
+            return _mapper.ProjectTo<Income>(_db.Incomes
+                    .AsNoTracking())
                 .ToAsyncEnumerable()
                 .Where(x => x.Id == taxpayerId) //TODO: поправить
                 .Where(x => x.Date >= from && x.Date <= to);
@@ -47,9 +33,8 @@ namespace TaxService.Data
 
         public IAsyncEnumerable<Payment> GetPaymentsAsync(int taxpayerId, DateTime from, DateTime to)
         {
-            return _db.Payments
-                .AsNoTracking()
-                .ProjectTo<Payment>(_mapperConfig)
+            return _mapper.ProjectTo<Payment>(_db.Payments
+                    .AsNoTracking())
                 .ToAsyncEnumerable()
                 .Where(x => x.Id == taxpayerId) //TODO: поправить
                 .Where(x => x.Date >= from && x.Date <= to);
@@ -63,9 +48,8 @@ namespace TaxService.Data
 
         public IAsyncEnumerable<ReportTemplate> GetReportTemplatesAsync()
         {
-            return _db.ReportTemplates
-                .AsNoTracking()
-                .ProjectTo<ReportTemplate>(_mapperConfig)
+            return _mapper.ProjectTo<ReportTemplate>(_db.ReportTemplates
+                    .AsNoTracking())
                 .ToAsyncEnumerable();
         }
 
@@ -77,9 +61,8 @@ namespace TaxService.Data
 
         public IAsyncEnumerable<Taxpayer> GetTaxpayersAsync(int inspectorId)
         {
-            return _db.Taxpayers
-                .AsNoTracking()
-                .ProjectTo<Taxpayer>(_mapperConfig)
+            return _mapper.ProjectTo<Taxpayer>(_db.Taxpayers
+                    .AsNoTracking())
                 .ToAsyncEnumerable();
         }
 
