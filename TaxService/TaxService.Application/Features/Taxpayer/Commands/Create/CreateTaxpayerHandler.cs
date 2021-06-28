@@ -8,10 +8,10 @@ namespace TaxService.Application.Features.Taxpayer.Commands.Create
 {
     public class CreateTaxpayerHandler : IRequestHandler<CreateTaxpayerCommand, int>
     {
-        private readonly ITaxRepository _repo;
+        private readonly IAsyncRespository<Domain.Model.Taxpayer> _repo;
         private readonly IMapper _mapper;
 
-        public CreateTaxpayerHandler(ITaxRepository repo, IMapper mapper)
+        public CreateTaxpayerHandler(IAsyncRespository<Domain.Model.Taxpayer> repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
@@ -20,7 +20,7 @@ namespace TaxService.Application.Features.Taxpayer.Commands.Create
         public async Task<int> Handle(CreateTaxpayerCommand request, CancellationToken cancellationToken)
         {
             var taxpayer = _mapper.Map<Domain.Model.Taxpayer>(request);
-            return await _repo.SaveTaxpayerAsync(request.InspectorId, taxpayer);
+            return await _repo.CreateAsync(taxpayer, cancellationToken);
         }
     }
 }
