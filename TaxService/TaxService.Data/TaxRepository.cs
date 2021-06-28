@@ -66,18 +66,20 @@ namespace TaxService.Data
                 .ToAsyncEnumerable();
         }
 
-        public async Task SaveReportTemplateAsync(ReportTemplate template)
+        public async Task<int> SaveReportTemplateAsync(ReportTemplate template)
         {
             var tempalteDto = _mapper.Map<ReportTemplateDto>(template);
             _db.ReportTemplates.Attach(tempalteDto);
             await _db.SaveChangesAsync();
+            return await Task.FromResult(tempalteDto.Id);
         }
 
-        public async Task SaveTaxpayerAsync(int inspectorId, Taxpayer taxpayer)
+        public async Task<int> SaveTaxpayerAsync(int inspectorId, Taxpayer taxpayer)
         {
             var taxpayerDto = _mapper.Map<ReportTemplateDto>(taxpayer);
             _db.ReportTemplates.Attach(taxpayerDto);
             await _db.SaveChangesAsync();
+            return await Task.FromResult(taxpayerDto.Id);
         }
     }
 }

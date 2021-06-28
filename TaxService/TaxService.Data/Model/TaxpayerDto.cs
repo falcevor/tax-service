@@ -13,10 +13,6 @@ namespace TaxService.Data.Model
         public string AdditionalInfo { get; set; }
         public string PlaceAddress { get; set; }
 
-        public int CategoryId { get; set; }
-        public int TaxTypeId { get; set; }
-        public int PlaceTypeId { get; set; }
-
         public TaxpayerCategoryDto Category { get; set; }
         public TaxTypeDto TaxType { get; set; }
         public PlaceTypeDto PlaceType { get; set; }

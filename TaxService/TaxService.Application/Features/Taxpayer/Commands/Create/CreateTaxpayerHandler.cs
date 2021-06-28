@@ -1,6 +1,26 @@
-﻿namespace TaxService.Application.Features.Taxpayer.Commands.Create
+﻿using AutoMapper;
+using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
+using TaxService.Application.Repositories;
+
+namespace TaxService.Application.Features.Taxpayer.Commands.Create
 {
-    public class CreateTaxpayerHandler
+    public class CreateTaxpayerHandler : IRequestHandler<CreateTaxpayerCommand, int>
     {
+        private readonly ITaxRepository _repo;
+        private readonly IMapper _mapper;
+
+        public CreateTaxpayerHandler(ITaxRepository repo, IMapper mapper)
+        {
+            _repo = repo;
+            _mapper = mapper;
+        }
+
+        public async Task<int> Handle(CreateTaxpayerCommand request, CancellationToken cancellationToken)
+        {
+            var taxpayer = _mapper.Map<Domain.Model.Taxpayer>(request);
+            return await _repo.SaveTaxpayerAsync(request.InspectorId, taxpayer);
+        }
     }
 }
