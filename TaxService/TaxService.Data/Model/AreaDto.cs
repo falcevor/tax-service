@@ -2,7 +2,8 @@
 {
     public class AreaDto
     {
-        public int AreaId { get; set; }
-        public int InspectorId { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public InspectorDto Inspector { get; set; }
     }
 }

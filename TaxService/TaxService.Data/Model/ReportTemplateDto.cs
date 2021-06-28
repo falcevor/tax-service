@@ -1,4 +1,6 @@
-﻿namespace TaxService.Data.Model
+﻿using System.Collections.Generic;
+
+namespace TaxService.Data.Model
 {
     public class ReportTemplateDto
     {
@@ -6,6 +8,6 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public byte[] File { get; set; }
-        public ReportTemplateParameterDto[] Parameters { get; set; }
+        public IEnumerable<ReportTemplateParameterDto> Parameters { get; set; }
     }
 }

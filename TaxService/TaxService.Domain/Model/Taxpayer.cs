@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TaxService.Domain.Model
 {
@@ -21,6 +22,9 @@ namespace TaxService.Domain.Model
         public PlaceType PlaceType { get; set; }
 
         public DateTime BeginDate { get; set; }
-        public Document[] Documents { get; set; }
+        public IEnumerable<Document> Documents { get; set; }
+
+        public IEnumerable<Income> Incomes { get; set; }
+        public IEnumerable<Payment> Payments { get; set; }
     }
 }

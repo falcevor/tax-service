@@ -14,7 +14,11 @@ namespace TaxService.Data.Mappings
             CreateMap<ReportTemplateDto, ReportTemplate>().ReverseMap();
             CreateMap<ReportTemplateParameterDto, ReportTemplateParameter>().ReverseMap();
             CreateMap<TaxpayerDto, Taxpayer>().ReverseMap();
-            CreateMap<Taxpayer, TaxpayerDto>().ReverseMap();
+            CreateMap<TaxTypeDto, TaxType>().ReverseMap();
+            CreateMap<TaxpayerCategoryDto, TaxpayerCategory>().ReverseMap();
+            CreateMap<AreaDto, Area>().ReverseMap();
+            CreateMap<InspectorDto, Inspector>().ReverseMap();
+            CreateMap<PlaceTypeDto, PlaceType>().ReverseMap();
         }
     }
 }
