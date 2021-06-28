@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TaxService.Data.Model
 {
@@ -8,13 +9,18 @@ namespace TaxService.Data.Model
         public string Inn { get; set; }
         public string Kpp { get; set; }
         public string Name { get; set; }
-        public string Category { get; set; }
-        public string TaxType { get; set; }
         public int Percent { get; set; }
-        public string PlaceType { get; set; }
-        public string PlaceAddress { get; set; }
-        public DateTime BeginDate { get; set; }
         public string AdditionalInfo { get; set; }
-        public DocumentDto[] Documents { get; set; }
+        public string PlaceAddress { get; set; }
+
+        public TaxpayerCategoryDto Category { get; set; }
+        public TaxTypeDto TaxType { get; set; }
+        public PlaceTypeDto PlaceType { get; set; }
+
+        public DateTime BeginDate { get; set; }
+        public IEnumerable<DocumentDto> Documents { get; set; }
+
+        public IEnumerable<IncomeDto> Incomes { get; set; }
+        public IEnumerable<PaymentDto> Payments { get; set; }
     }
 }
