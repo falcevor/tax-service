@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using TaxService.Application.Features.Taxpayer.Commands.Create;
+using TaxService.Application.Features.Taxpayer.Commands.Delete;
 using TaxService.Application.Features.Taxpayer.Commands.Update;
 using TaxService.Application.Features.Taxpayer.Queries.GetAll;
 using TaxService.Application.Features.Taxpayer.Queries.GetById;
@@ -16,37 +16,44 @@ namespace TaxService.Api.v1.Controllers
     {
         private readonly IMediator _bus;
 
-        public TaxpayerController(ILogger<TaxpayerController> logger, IMediator bus)
+        public TaxpayerController(IMediator bus)
         {
             _bus = bus;
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetTaxpayers([FromQuery]GetTaxpayersQuery query)
+        public async Task<ActionResult> GetAll()
         {
-            await _bus.Send(query);
+            await _bus.Send(new GetTaxpayersQuery());
             return Ok();
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetTaxpayerById([FromQuery]GetTaxpayerByIdQuery query)
+        public async Task<ActionResult> GetById(int id)
         {
-            var result = await _bus.Send(query);
+            var result = await _bus.Send(new GetTaxpayerByIdQuery() { Id = id });
             return Ok(result);
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> CreateTaxpayer([FromBody]CreateTaxpayerCommand command)
+        public async Task<ActionResult<int>> Create(CreateTaxpayerCommand command)
         {
             var id = await _bus.Send(command);
             return Ok(id);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> UpdateTaxpayer([FromBody]UpdateTaxpayerCommand command)
+        [HttpPut]
+        public async Task<ActionResult> Update(UpdateTaxpayerCommand command)
         {
             await _bus.Send(command);
             return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await _bus.Send(new DeleteTaxpayerCommand() { Id = id });
+            return await Task.FromResult(Ok());
         }
     }
 }

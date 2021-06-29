@@ -3,7 +3,7 @@ using System;
 
 namespace TaxService.Application.Features.Taxpayer.Commands.Create
 {
-    public class CreateTaxpayerCommand : IRequest<int>
+    public class CreateTaxpayerCommand : IRequest
     {
         public string Inn { get; set; }
         public string Kpp { get; set; }

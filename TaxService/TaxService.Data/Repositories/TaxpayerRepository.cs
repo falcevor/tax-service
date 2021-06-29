@@ -29,12 +29,11 @@ namespace TaxService.Data.Repositories
             );
         }
 
-        public async Task<int> CreateAsync(Taxpayer item, CancellationToken cancelationToken)
+        public async Task CreateAsync(Taxpayer item, CancellationToken cancelationToken)
         {
             var taxpayer = _mapper.Map<TaxpayerDto>(item);
             await _db.Taxpayers.AddAsync(taxpayer);
             await _db.SaveChangesAsync();
-            return await Task.FromResult(taxpayer.Id);
         }
 
         public async Task DeleteAsync(int id, CancellationToken cancelationToken)

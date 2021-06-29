@@ -6,7 +6,7 @@ using TaxService.Application.Repositories;
 
 namespace TaxService.Application.Features.Taxpayer.Commands.Create
 {
-    public class CreateTaxpayerHandler : IRequestHandler<CreateTaxpayerCommand, int>
+    public class CreateTaxpayerHandler : IRequestHandler<CreateTaxpayerCommand>
     {
         private readonly IAsyncRepository<Domain.Model.Taxpayer> _repo;
         private readonly IMapper _mapper;
@@ -17,10 +17,11 @@ namespace TaxService.Application.Features.Taxpayer.Commands.Create
             _mapper = mapper;
         }
 
-        public async Task<int> Handle(CreateTaxpayerCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateTaxpayerCommand request, CancellationToken cancellationToken)
         {
             var taxpayer = _mapper.Map<Domain.Model.Taxpayer>(request);
-            return await _repo.CreateAsync(taxpayer, cancellationToken);
+            await _repo.CreateAsync(taxpayer, cancellationToken);
+            return await Task.FromResult(Unit.Value);
         }
     }
 }
