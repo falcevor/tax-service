@@ -11,7 +11,7 @@ using TaxService.Domain.Model;
 
 namespace TaxService.Data.Repositories
 {
-    public class TaxpayerRepository : IAsyncRespository<Taxpayer>
+    public class TaxpayerRepository : IAsyncRepository<Taxpayer>
     {
         private readonly AppDbContext _db;
         private readonly IMapper _mapper;

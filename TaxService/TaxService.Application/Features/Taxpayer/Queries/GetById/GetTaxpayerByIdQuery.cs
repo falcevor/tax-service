@@ -1,6 +1,9 @@
-﻿namespace TaxService.Application.Features.Taxpayer.Queries.GetById
+﻿using MediatR;
+
+namespace TaxService.Application.Features.Taxpayer.Queries.GetById
 {
-    public class GetTaxpayerByIdQuery
+    public class GetTaxpayerByIdQuery : IRequest<GetTaxpayerByIdResponse>
     {
+        public int Id { get; set; }
     }
 }

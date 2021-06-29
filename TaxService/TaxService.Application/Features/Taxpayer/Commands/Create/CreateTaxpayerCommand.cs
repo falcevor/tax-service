@@ -5,8 +5,6 @@ namespace TaxService.Application.Features.Taxpayer.Commands.Create
 {
     public class CreateTaxpayerCommand : IRequest<int>
     {
-        public int InspectorId { get; set; }
-
         public string Inn { get; set; }
         public string Kpp { get; set; }
         public string Name { get; set; }
@@ -16,6 +14,7 @@ namespace TaxService.Application.Features.Taxpayer.Commands.Create
         public int CategoryId { get; set; }
         public int TaxTypeId { get; set; }
         public int PlaceTypeId { get; set; }
+        public int AreaId { get; set; }
         public DateTime BeginDate { get; set; }
     }
 }

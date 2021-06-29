@@ -16,6 +16,7 @@ namespace TaxService.Domain.Model
         public TaxpayerCategory Category { get; set; }
         public TaxType TaxType { get; set; }
         public PlaceType PlaceType { get; set; }
+        public Area Area { get; set; }
 
         public DateTime BeginDate { get; set; }
         public IEnumerable<Document> Documents { get; set; }
