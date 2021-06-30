@@ -13,8 +13,8 @@ namespace TaxService.Data.Extensions
         {
             services.AddDbContext<AppDbContext>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddTransient<ITaxRepository, TaxRepository>();
             services.AddTransient<IAsyncRepository<Taxpayer>, TaxpayerRepository>();
+            services.AddTransient<IAsyncRepository<ReportTemplate>, ReportTemplateRepository>();
 
             return services;
         }

@@ -1,6 +1,8 @@
-﻿namespace TaxService.Application.Features.ReportTemplate.Queries.GetAll
+﻿using MediatR;
+
+namespace TaxService.Application.Features.ReportTemplate.Queries.GetAll
 {
-    class GetReportTemplatesQuery
+    public class GetReportTemplatesQuery : IRequest<GetReportTemplatesResponse>
     {
     }
 }
