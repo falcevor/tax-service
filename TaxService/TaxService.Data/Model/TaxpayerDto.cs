@@ -16,6 +16,7 @@ namespace TaxService.Data.Model
         public TaxpayerCategoryDto Category { get; set; }
         public TaxTypeDto TaxType { get; set; }
         public PlaceTypeDto PlaceType { get; set; }
+        public AreaDto Area { get; set; }
 
         public DateTime BeginDate { get; set; }
         public IEnumerable<DocumentDto> Documents { get; set; }

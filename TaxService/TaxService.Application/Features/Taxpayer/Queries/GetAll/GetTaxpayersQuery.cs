@@ -1,6 +1,8 @@
-﻿namespace TaxService.Application.Features.Taxpayer.Queries.GetAll
+﻿using MediatR;
+
+namespace TaxService.Application.Features.Taxpayer.Queries.GetAll
 {
-    public class GetTaxpayersQuery
+    public class GetTaxpayersQuery : IRequest<GetTaxpayersResponse>
     {
     }
 }

@@ -1,6 +1,9 @@
-﻿namespace TaxService.Application.Features.ReportTemplate.Queries.GetAll
+﻿using System.Collections.Generic;
+
+namespace TaxService.Application.Features.ReportTemplate.Queries.GetAll
 {
-    class GetReportTemplatesResponse
+    public class GetReportTemplatesResponse
     {
+        public IEnumerable<Domain.Model.ReportTemplate> Data { get; set; }
     }
 }

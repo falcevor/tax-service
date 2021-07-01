@@ -11,7 +11,7 @@ using TaxService.Domain.Model;
 
 namespace TaxService.Data.Repositories
 {
-    public class TaxpayerRepository : IAsyncRespository<Taxpayer>
+    public class TaxpayerRepository : IAsyncRepository<Taxpayer>
     {
         private readonly AppDbContext _db;
         private readonly IMapper _mapper;
@@ -29,12 +29,11 @@ namespace TaxService.Data.Repositories
             );
         }
 
-        public async Task<int> CreateAsync(Taxpayer item, CancellationToken cancelationToken)
+        public async Task CreateAsync(Taxpayer item, CancellationToken cancelationToken)
         {
             var taxpayer = _mapper.Map<TaxpayerDto>(item);
             await _db.Taxpayers.AddAsync(taxpayer);
             await _db.SaveChangesAsync();
-            return await Task.FromResult(taxpayer.Id);
         }
 
         public async Task DeleteAsync(int id, CancellationToken cancelationToken)
