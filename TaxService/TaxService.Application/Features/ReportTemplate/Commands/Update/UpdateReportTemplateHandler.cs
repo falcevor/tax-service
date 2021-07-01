@@ -21,7 +21,7 @@ namespace TaxService.Application.Features.ReportTemplate.Commands.Update
         {
             var template = _mapper.Map<Domain.Model.ReportTemplate>(request);
             await _repo.UpdateAsync(template, cancellationToken);
-            return await Task.FromResult(Unit.Value);
+            return Unit.Value;
         }
     }
 }

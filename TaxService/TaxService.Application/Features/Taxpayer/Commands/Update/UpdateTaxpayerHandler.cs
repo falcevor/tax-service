@@ -21,7 +21,7 @@ namespace TaxService.Application.Features.Taxpayer.Commands.Update
         {
             var taxpayer = _mapper.Map<Domain.Model.Taxpayer>(request);
             await _repo.UpdateAsync(taxpayer, cancellationToken);
-            return await Task.FromResult(Unit.Value);
+            return Unit.Value;
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace TaxService.Application.Features.ReportTemplate.Commands.Delete
 {
-    public class DeleteRecordTemplateCommand : IRequest
+    public class DeleteReportTemplateCommand : IRequest
     {
         public int Id { get; set; }
     }

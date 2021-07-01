@@ -24,8 +24,8 @@ namespace TaxService.Api.v1.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
-            await _bus.Send(new GetTaxpayersQuery());
-            return Ok();
+            var result = await _bus.Send(new GetTaxpayersQuery());
+            return Ok(result);
         }
 
         [HttpGet]
@@ -38,8 +38,8 @@ namespace TaxService.Api.v1.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> Create(CreateTaxpayerCommand command)
         {
-            var id = await _bus.Send(command);
-            return Ok(id);
+            await _bus.Send(command);
+            return Ok();
         }
 
         [HttpPut]
@@ -53,7 +53,7 @@ namespace TaxService.Api.v1.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             await _bus.Send(new DeleteTaxpayerCommand() { Id = id });
-            return await Task.FromResult(Ok());
+            return Ok();
         }
     }
 }

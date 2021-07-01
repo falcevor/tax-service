@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,10 +21,10 @@ namespace TaxService.Data.Repositories
             _mapper = mapper;
         }
 
-        public Task<IEnumerable<ReportTemplate>> GetAllAsync(CancellationToken cancelationToken)
+        public Task<IQueryable<ReportTemplate>> GetAllAsync(CancellationToken cancelationToken)
         {
             return Task.FromResult(
-                _mapper.ProjectTo<ReportTemplate>(_db.ReportTemplates.AsNoTracking()).AsEnumerable()
+                _mapper.ProjectTo<ReportTemplate>(_db.ReportTemplates.AsNoTracking())
             );
         }
 

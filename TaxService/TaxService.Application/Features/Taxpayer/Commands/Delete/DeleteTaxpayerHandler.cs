@@ -17,7 +17,7 @@ namespace TaxService.Application.Features.Taxpayer.Commands.Delete
         public async Task<Unit> Handle(DeleteTaxpayerCommand request, CancellationToken cancellationToken)
         {
             await _repo.DeleteAsync(request.Id, cancellationToken);
-            return await Task.FromResult(Unit.Value);
+            return Unit.Value;
         }
     }
 }
