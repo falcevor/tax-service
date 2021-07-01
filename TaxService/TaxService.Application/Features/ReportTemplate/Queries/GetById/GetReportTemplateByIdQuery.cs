@@ -1,6 +1,9 @@
-﻿namespace TaxService.Application.Features.ReportTemplate.Queries.GetById
+﻿using MediatR;
+
+namespace TaxService.Application.Features.ReportTemplate.Queries.GetById
 {
-    public class GetReportTemplateByIdQuery
+    public class GetReportTemplateByIdQuery : IRequest<GetReportTemplateByIdResponse>
     {
+        public int Id { get; set; }
     }
 }
