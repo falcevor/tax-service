@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TaxService.Application.Features.ReportTemplate.Commands.Create;
 using TaxService.Application.Features.ReportTemplate.Commands.Delete;
@@ -22,35 +23,35 @@ namespace TaxService.Api.v1.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<GetReportTemplatesResponse>>> GetReportTempalates()
         {
             var result = await _bus.Send(new GetReportTemplatesQuery());
             return Ok(result);
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetById(int id)
+        public async Task<ActionResult<GetReportTemplateByIdResponse>> GetReportTemplate(int id)
         {
             var result = await _bus.Send(new GetReportTemplateByIdQuery() { Id = id });
             return Ok(result);
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> Create(CreateReportTemplateCommand command)
+        public async Task<ActionResult> CreateReportTemplate(CreateReportTemplateCommand command)
         {
             await _bus.Send(command);
             return Ok();
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(UpdateReportTemplateCommand command)
+        public async Task<ActionResult> UpdateReportTemplate(UpdateReportTemplateCommand command)
         {
             await _bus.Send(command);
             return Ok();
         }
 
         [HttpDelete]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> DeleteReportTemplate(int id)
         {
             await _bus.Send(new DeleteReportTemplateCommand() { Id = id });
             return Ok();
