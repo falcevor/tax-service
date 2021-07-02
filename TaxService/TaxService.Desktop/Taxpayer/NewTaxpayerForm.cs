@@ -1,65 +1,63 @@
-﻿using ServiceReference1;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Windows.Forms;
+using TaxService.Client;
 
 namespace TaxServiceDesktop.Taxpayer
 {
     public partial class NewTaxpayerForm : Form
     {
-        private int _inspectorId;
-        private string _avatarPath;
+        private readonly int _inspectorId;
+        private readonly TaxServiceClient _client;
 
         public NewTaxpayerForm(int inspectorId)
         {
+            _client = new TaxServiceClient("http://localhost:5000", new HttpClient());
             _inspectorId = inspectorId;
             InitializeComponent();
         }
 
         private async void btnOk_Click(object sender, EventArgs e)
         {
-            var attach = new List<DocumentInfo>();
+            var attach = new List<Document>();
             foreach (DataGridViewRow row in dgvAttachments.Rows)
             {
                 var path = Convert.ToString(row.Cells[2].Value);
                 if (string.IsNullOrEmpty(path)) continue;
 
-                attach.Add(new DocumentInfo()
-                {
-                    id = -1,
-                    name = Convert.ToString(row.Cells[0].Value),
-                    description = Convert.ToString(row.Cells[1].Value),
-                    file = File.ReadAllBytes(path)
+                attach.Add(new Document()
+                { 
+                    Name = Convert.ToString(row.Cells[0].Value),
+                    Description = Convert.ToString(row.Cells[1].Value),
+                    File = File.ReadAllBytes(path)
                 });
             }
 
-            var value = new TaxpayerInfo()
+            var value = new CreateTaxpayerCommand()
             {
-                id = -1,
-                inn = tbINN.Text,
-                kpp = tbKPP.Text,
-                name = tbName.Text,
-                category = cbTaxpayerCategory.Text,
-                taxType = cbTaxType.Text,
-                placeType = cbPlaceType.Text,
-                placeAddress = tbPlaceAddress.Text,
-                additionalInfo = tbAdditionalInfo.Text,
-                percent = Int32.Parse(tbPercent.Text),
-                beginDate = dtpDate.Value,
-                documents = attach.ToArray()
+                Inn = tbINN.Text,
+                Kpp = tbKPP.Text,
+                Name = tbName.Text,
+                CategoryId = 1, // TODO: загружать из справочников.
+                TaxTypeId = 1,
+                PlaceTypeId = 1,
+                PlaceAddress = tbPlaceAddress.Text,
+                AdditionalInfo = tbAdditionalInfo.Text,
+                Percent = Int32.Parse(tbPercent.Text),
+                BeginDate = dtpDate.Value,
+                //Documents = attach.ToArray() // Отдельно прикреплять документы
             };
 
-            var client = new TaxServiceClient();
-            var response = await client.SaveTaxpayerInfoAsync(_inspectorId, value);
-
-            if (!response)
+            try
             {
-                MessageBox.Show("Ошибка сохранения");
-            }
-            else
-            {
+                await _client.CreateTaxpayerAsync(value);
                 Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка сохранения\n{ex.Message}");
             }
         }
 

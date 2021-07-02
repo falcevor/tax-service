@@ -1,23 +1,27 @@
-﻿using ServiceReference1;
-using System;
+﻿using System;
+using System.Linq;
+using System.Net.Http;
 using System.Windows.Forms;
+using TaxService.Client;
 
 namespace TaxServiceDesktop.Report
 {
     public partial class ReportTemplateListForm : Form
     {
+        private readonly TaxServiceClient _client;
+
         public ReportTemplateListForm()
         {
+            _client = new TaxServiceClient("http://localhost:5000", new HttpClient());
             InitializeComponent();
             LoadData();
         }
 
         private async void LoadData()
         {
-            var client = new TaxServiceClient();
-            var response = await client.GetReportTemplateListAsync();
+            var response = await _client.GetReportTempalatesAsync();
 
-            if (response != null && response.Length != 0)
+            if (response?.Any() ?? false)
             {
                 dgvReportTemplateList.DataSource = response;
             }
@@ -25,14 +29,11 @@ namespace TaxServiceDesktop.Report
 
         private async void tsbtnCreateReport_Click(object sender, EventArgs e)
         {
-
-            var client = new TaxServiceClient();
-
             var selectedrowindex = dgvReportTemplateList.SelectedCells[0].RowIndex;
             var selectedRow = dgvReportTemplateList.Rows[selectedrowindex];
             var value = Convert.ToString(selectedRow.Cells["cmID"].Value);
             var selectedId = Int32.Parse(value);
-            var info = await client.GetReportTemplateInfoAsync(selectedId);
+            var info = await _client.GetReportTemplateAsync(selectedId);
 
             var form = new CreateReportForm(info);
             form.MdiParent = MdiParent;

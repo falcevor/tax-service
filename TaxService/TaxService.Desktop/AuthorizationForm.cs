@@ -1,6 +1,7 @@
-﻿using ServiceReference1;
-using System;
+﻿using System;
+using System.Net.Http;
 using System.Windows.Forms;
+using TaxService.Client;
 
 namespace TaxServiceDesktop
 {
@@ -11,13 +12,13 @@ namespace TaxServiceDesktop
             InitializeComponent();
         }
 
-        private async void btnEnter_Click(object sender, EventArgs e)
+        private void btnEnter_Click(object sender, EventArgs e)
         {
+            
             var login = tbLogin.Text;
             var pass = tbPassword.Text;
 
-            var client = new TaxServiceClient();
-            var response = await client.LoginAsync(login, pass);
+            var response = 1; //TODO: Реализовать аутентификацию
 
             if (response != -1)
             {

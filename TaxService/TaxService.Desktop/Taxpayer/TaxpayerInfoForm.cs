@@ -1,39 +1,42 @@
-﻿using ServiceReference1;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Windows.Forms;
+using TaxService.Client;
 
 namespace TaxServiceDesktop.Taxpayer
 {
     public partial class TaxpayerInfoForm : Form
     {
-        private TaxpayerInfo _info;
         private int _inspectorId;
+        private readonly TaxServiceClient _client;
+        private readonly GetTaxpayerByIdResponse _info;
 
-        public TaxpayerInfoForm(int inspectorId, TaxpayerInfo info)
+        public TaxpayerInfoForm(int inspectorId, GetTaxpayerByIdResponse info)
         {
+            _client = new TaxServiceClient("http://localhost:5000", new HttpClient());
             _info = info;
             _inspectorId = inspectorId;
             InitializeComponent();
 
-            tbINN.Text = info.inn;
-            tbKPP.Text = info.kpp;
-            tbName.Text = info.name;
-            tbCategory.Text = info.category;
-            tbTaxType.Text = info.taxType;
-            tbPlaceCategory.Text = info.placeType;
-            tbPlaceAddress.Text = info.placeAddress;
-            tbAdditionalInfo.Text = info.additionalInfo;
-            dtpDate.Value = info.beginDate;
-            tbPercent.Text = "" + info.percent;
+            tbINN.Text = info.Inn;
+            tbKPP.Text = info.Kpp;
+            tbName.Text = info.Name;
+            tbCategory.Text = info.Category.Name;
+            tbTaxType.Text = info.TaxType.Name;
+            tbPlaceCategory.Text = info.PlaceType.Name;
+            tbPlaceAddress.Text = info.PlaceAddress;
+            tbAdditionalInfo.Text = info.AdditionalInfo;
+            dtpDate.Value = info.BeginDate.DateTime;
+            tbPercent.Text = "" + info.Percent;
 
-            Text = $"{info.inn} : {info.name} : {Text}";
-            if (info.documents == null) return;
-            foreach (var doc in info.documents)
+            Text = $"{info.Inn} : {info.Name} : {Text}";
+            if (info.Documents == null) return;
+            foreach (var doc in info.Documents)
             {
-                dgvAttachments.Rows.Add(new object[] { doc.id, doc.name, doc.description });
+                dgvAttachments.Rows.Add(new object[] { doc.Id, doc.Name, doc.Description });
             }
         }
 
@@ -54,9 +57,9 @@ namespace TaxServiceDesktop.Taxpayer
             dlg.FileName = value;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                var content = _info.documents
-                    .Where(x => x.name == value)
-                    .Select(x => x.file)
+                var content = _info.Documents
+                    .Where(x => x.Name == value)
+                    .Select(x => x.File)
                     .First();
 
                 File.WriteAllBytes(dlg.FileName, content);
@@ -88,12 +91,12 @@ namespace TaxServiceDesktop.Taxpayer
 
         private async void btnOk_Click(object sender, EventArgs e)
         {
-            var attach = new List<DocumentInfo>();
+            var attach = new List<Document>();
             foreach (DataGridViewRow row in dgvAttachments.Rows)
             {
                 var name = Convert.ToString(row.Cells[0].Value);
-                var doc = _info.documents?
-                    .Where(x => x.name == name)
+                var doc = _info.Documents?
+                    .Where(x => x.Name == name)
                     .FirstOrDefault();
 
                 if (doc != null)
@@ -105,41 +108,38 @@ namespace TaxServiceDesktop.Taxpayer
                 var path = Convert.ToString(row.Cells[2].Value);
                 if (string.IsNullOrEmpty(path)) continue;
 
-                attach.Add(new DocumentInfo()
+                attach.Add(new Document()
                 {
-                    id = -1,
-                    name = Convert.ToString(row.Cells[0].Value),
-                    description = Convert.ToString(row.Cells[1].Value),
-                    file = File.ReadAllBytes(path)
+                    Id = -1,
+                    Name = Convert.ToString(row.Cells[0].Value),
+                    Description = Convert.ToString(row.Cells[1].Value),
+                    File = File.ReadAllBytes(path)
                 });
             }
 
-            var value = new TaxpayerInfo()
+            var value = new UpdateTaxpayerCommand()
             {
-                id = _info.id,
-                inn = tbINN.Text,
-                kpp = tbKPP.Text,
-                name = tbName.Text,
-                category = tbCategory.Text,
-                taxType = tbTaxType.Text,
-                placeType = tbPlaceCategory.Text,
-                placeAddress = tbPlaceAddress.Text,
-                additionalInfo = tbAdditionalInfo.Text,
-                percent = Int32.Parse(tbPercent.Text),
-                beginDate = dtpDate.Value,
-                documents = attach.ToArray()
+                Id = _info.Id,
+                Inn = tbINN.Text,
+                Kpp = tbKPP.Text,
+                Name = tbName.Text,
+                CategoryId = 1, // TODO: Реализовать загрузку значений из справочников
+                TaxTypeId = 1,
+                PlaceTypeId = 1,
+                PlaceAddress = tbPlaceAddress.Text,
+                AdditionalInfo = tbAdditionalInfo.Text,
+                Percent = Int32.Parse(tbPercent.Text),
+                BeginDate = dtpDate.Value,
             };
 
-            var client = new TaxServiceClient();
-            var response = await client.SaveTaxpayerInfoAsync(_inspectorId, value);
-
-            if (!response)
+            try
             {
-                MessageBox.Show("Ошибка сохранения");
-            }
-            else
-            {
+                await _client.UpdateTaxpayerAsync(value);
                 Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка сохранения\n {ex.Message} ");
             }
         }
     }

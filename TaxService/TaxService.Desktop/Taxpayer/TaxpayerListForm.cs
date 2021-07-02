@@ -1,28 +1,29 @@
-﻿using ServiceReference1;
-using System;
+﻿using System;
 using System.Linq;
+using System.Net.Http;
 using System.Windows.Forms;
+using TaxService.Client;
 
 namespace TaxServiceDesktop.Taxpayer
 {
     public partial class TaxpayerListForm : Form
     {
-        private int _inspectorId;
+        private readonly int _inspectorId;
+        private readonly TaxServiceClient _client;
 
         public TaxpayerListForm(int inspectorId)
         {
             _inspectorId = inspectorId;
-
+            _client = new TaxServiceClient("http://localhost:5000", new HttpClient());
             InitializeComponent();
             LoadData();
         }
 
         private async void LoadData()
         {
-            var client = new TaxServiceClient();
-            var response = await client.GetTaxpayerListAsync(_inspectorId);
+            var response = await _client.GetTaxpayersAsync(); //TODO: Загружать индивидуально под инспектора
 
-            if (response != null && response.Length != 0)
+            if (response?.Any() ?? false)
             {
                 dgvTaxpayerList.DataSource = response;
             }
@@ -37,13 +38,11 @@ namespace TaxServiceDesktop.Taxpayer
 
         private async void tsbtnEdit_Click(object sender, EventArgs e)
         {
-            var client = new TaxServiceClient();
-
             var selectedrowindex = dgvTaxpayerList.SelectedCells[0].RowIndex;
             var selectedRow = dgvTaxpayerList.Rows[selectedrowindex];
             var value = Convert.ToString(selectedRow.Cells["cmID"].Value);
             var selectedId = Int32.Parse(value);
-            var info = await client.GetTaxpayerInfoAsync(selectedId);
+            var info = await _client.GetTaxpayerAsync(selectedId);
 
             var form = new TaxpayerInfoForm(_inspectorId, info);
             form.MdiParent = MdiParent;
@@ -73,16 +72,15 @@ namespace TaxServiceDesktop.Taxpayer
                 return;
 
             var filter = tstbSearchValue.Text;
-            var client = new TaxServiceClient();
-            var response = await client.GetTaxpayerListAsync(_inspectorId);
+            var response = await _client.GetTaxpayersAsync(); //TODO: Загружать индивидуально под инспектора
 
-            var filtered = response.Where(x => x.name.Contains(filter) ||
-                x.inn.Contains(filter) ||
-                x.kpp.Contains(filter) ||
-                x.placeAddress.Contains(filter) ||
-                x.taxType.Contains(filter) ||
-                x.category.Contains(filter) ||
-                x.additionalInfo.Contains(filter)
+            var filtered = response.Where(x => x.Name.Contains(filter) ||
+                x.Inn.Contains(filter) ||
+                x.Kpp.Contains(filter) ||
+                x.PlaceAddress.Contains(filter) ||
+                x.TaxType.Name.Contains(filter) ||
+                x.Category.Name.Contains(filter) ||
+                x.AdditionalInfo.Contains(filter)
             ).ToList();
 
             if (filtered != null)
