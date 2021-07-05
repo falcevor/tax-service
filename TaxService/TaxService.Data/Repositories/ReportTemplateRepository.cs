@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using TaxService.Application.Repositories;
 using TaxService.Data.DataContext;
-using TaxService.Data.Model;
 using TaxService.Domain.Model;
 
 namespace TaxService.Data.Repositories
@@ -30,8 +29,7 @@ namespace TaxService.Data.Repositories
 
         public async Task CreateAsync(ReportTemplate item, CancellationToken cancelationToken)
         {
-            var template = _mapper.Map<ReportTemplateDto>(item);
-            await _db.ReportTemplates.AddAsync(template);
+            await _db.ReportTemplates.AddAsync(item);
             await _db.SaveChangesAsync();
         }
 

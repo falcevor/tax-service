@@ -1,17 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using TaxService.Data.Model;
+using TaxService.Domain.Model;
 
 namespace TaxService.Data.DataContext
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<DocumentDto> Documents { get; private set; }
-        public DbSet<PaymentDto> Payments { get; private set; }
-        public DbSet<IncomeDto> Incomes { get; private set; }
-        public DbSet<ReportTemplateDto> ReportTemplates { get; private set; }
-        public DbSet<TaxpayerDto> Taxpayers { get; private set; }
+        public DbSet<Document> Documents { get; private set; }
+        public DbSet<Payment> Payments { get; private set; }
+        public DbSet<Income> Incomes { get; private set; }
+        public DbSet<ReportTemplate> ReportTemplates { get; private set; }
+        public DbSet<Taxpayer> Taxpayers { get; private set; }
 
         private IConfiguration _config { get; set; }
         private ILoggerFactory _loggerFactory { get; set; }

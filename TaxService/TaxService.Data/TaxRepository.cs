@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using TaxService.Domain.Model;
 using TaxService.Data.DataContext;
 using AutoMapper;
-using TaxService.Data.Model;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using TaxService.Application.Repositories;
@@ -68,18 +67,16 @@ namespace TaxService.Data
 
         public async Task<int> SaveReportTemplateAsync(ReportTemplate template)
         {
-            var tempalteDto = _mapper.Map<ReportTemplateDto>(template);
-            _db.ReportTemplates.Attach(tempalteDto);
+            _db.ReportTemplates.Attach(template);
             await _db.SaveChangesAsync();
-            return await Task.FromResult(tempalteDto.Id);
+            return await Task.FromResult(template.Id);
         }
 
         public async Task<int> SaveTaxpayerAsync(int inspectorId, Taxpayer taxpayer)
         {
-            var taxpayerDto = _mapper.Map<ReportTemplateDto>(taxpayer);
-            _db.ReportTemplates.Attach(taxpayerDto);
+            _db.Taxpayers.Attach(taxpayer);
             await _db.SaveChangesAsync();
-            return await Task.FromResult(taxpayerDto.Id);
+            return await Task.FromResult(taxpayer.Id);
         }
     }
 }
