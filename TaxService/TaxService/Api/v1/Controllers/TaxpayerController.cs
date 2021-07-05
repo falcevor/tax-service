@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TaxService.Application.Features.Taxpayer.Commands.Create;
-using TaxService.Application.Features.Taxpayer.Commands.Delete;
-using TaxService.Application.Features.Taxpayer.Commands.Update;
-using TaxService.Application.Features.Taxpayer.Queries.GetAll;
-using TaxService.Application.Features.Taxpayer.Queries.GetById;
+using TaxService.Application.Features.TaxpayerFeature.Commands.Create;
+using TaxService.Application.Features.TaxpayerFeature.Commands.Delete;
+using TaxService.Application.Features.TaxpayerFeature.Commands.Update;
+using TaxService.Application.Features.TaxpayerFeature.Queries.GetAll;
+using TaxService.Application.Features.TaxpayerFeature.Queries.GetById;
 
 namespace TaxService.Api.v1.Controllers
 {

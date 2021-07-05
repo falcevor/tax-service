@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using TaxService.Application.Features.Taxpayer.Commands.Create;
-using TaxService.Application.Features.Taxpayer.Commands.Update;
-using TaxService.Application.Features.Taxpayer.Queries.GetById;
+using TaxService.Application.Features.TaxpayerFeature.Commands.Create;
+using TaxService.Application.Features.TaxpayerFeature.Commands.Update;
+using TaxService.Application.Features.TaxpayerFeature.Queries.GetById;
 using TaxService.Domain.Model;
 
 namespace TaxService.Application.Mappings
