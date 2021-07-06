@@ -2,6 +2,7 @@
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using TaxService.Application.Exceptions;
 using TaxService.Application.Repositories;
 using TaxService.Domain.Model;
 
@@ -20,7 +21,9 @@ namespace TaxService.Application.Features.TaxpayerFeature.Queries.GetById
 
         public async Task<GetTaxpayerByIdResponse> Handle(GetTaxpayerByIdQuery request, CancellationToken cancellationToken)
         {
-            return _mapper.Map<GetTaxpayerByIdResponse>(await _repo.GetAsync(request.Id, cancellationToken));
+            var result = await _repo.GetAsync(request.Id, cancellationToken);
+            if (result is null) throw new NotFoundException($"There is no such Taxpayer with id={request.Id}");
+            return _mapper.Map<GetTaxpayerByIdResponse>(result);
         }
     }
 }

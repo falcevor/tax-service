@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using FunctionalTests.Web.TestData;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -40,12 +40,12 @@ namespace FunctionalTests.Web
                             db.Database.EnsureCreated();
                             try
                             {
-                                //TODO: обогатить тестовую БД данными
+                                TaxpayerSeed.SeedAsync(db).Wait();
                             }
                             catch (Exception ex)
                             {
                                 logger.LogError(ex, $"An error occurred seeding the " +
-                                    "database with test messages. Error: {ex.Message}");
+                                    $"database with test data. Error: {ex.Message}");
                             }
                         }
 

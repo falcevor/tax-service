@@ -7,6 +7,6 @@ namespace TaxService.Domain.Model
         public int Id { get; set; }
         public string Name { get; set; }
         public Inspector Inspector { get; set; } 
-        public IEnumerable<Taxpayer> Taxpayers { get; set; }
+        public IList<Taxpayer> Taxpayers { get; set; }
     }
 }

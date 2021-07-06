@@ -20,6 +20,7 @@ namespace TaxService
 
             services.AddAppApiVersioning();
             services.AddAppSwaggerServices();
+            services.AddAppMiddlewares();
         }
 
         public void Configure(
@@ -34,6 +35,7 @@ namespace TaxService
             }
 
             app.UseRouting();
+            app.UseAppMiddlewares();
 
             app.UseEndpoints(endpoints =>
             {

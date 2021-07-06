@@ -20,9 +20,9 @@ namespace TaxService.Application.Features.TaxpayerFeature.Queries.GetAll
         public Area Area { get; set; }
 
         public DateTime BeginDate { get; set; }
-        public IEnumerable<Document> Documents { get; set; }
+        public IList<Document> Documents { get; set; }
 
-        public IEnumerable<Income> Incomes { get; set; }
-        public IEnumerable<Payment> Payments { get; set; }
+        public IList<Income> Incomes { get; set; }
+        public IList<Payment> Payments { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,19 +11,15 @@ namespace TaxService.Data.Repositories
     public class ReportTemplateRepository : IAsyncRepository<ReportTemplate>
     {
         private readonly AppDbContext _db;
-        private readonly IMapper _mapper;
 
-        public ReportTemplateRepository(AppDbContext db, IMapper mapper)
+        public ReportTemplateRepository(AppDbContext db)
         {
             _db = db;
-            _mapper = mapper;
         }
 
         public Task<IQueryable<ReportTemplate>> GetAllAsync(CancellationToken cancelationToken)
         {
-            return Task.FromResult(
-                _mapper.ProjectTo<ReportTemplate>(_db.ReportTemplates.AsNoTracking())
-            );
+            return Task.FromResult(_db.ReportTemplates.AsNoTracking());
         }
 
         public async Task CreateAsync(ReportTemplate item, CancellationToken cancelationToken)
@@ -42,14 +37,12 @@ namespace TaxService.Data.Repositories
 
         public async Task<ReportTemplate> GetAsync(int id, CancellationToken cancelationToken)
         {
-            var template = await _db.ReportTemplates.FindAsync(id);
-            return _mapper.Map<ReportTemplate>(template);
+            return await _db.ReportTemplates.FindAsync(id);
         }
 
         public async Task UpdateAsync(ReportTemplate item, CancellationToken cancelationToken)
         {
-            var template = _mapper.Map<ReportTemplate>(item);
-            _db.Attach(template);
+            _db.Attach(item);
             await _db.SaveChangesAsync();
         }
     }

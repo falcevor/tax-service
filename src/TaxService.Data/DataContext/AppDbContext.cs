@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using TaxService.Domain.Model;
 
 namespace TaxService.Data.DataContext
@@ -11,8 +10,6 @@ namespace TaxService.Data.DataContext
         public DbSet<Income> Incomes { get; private set; }
         public DbSet<ReportTemplate> ReportTemplates { get; private set; }
         public DbSet<Taxpayer> Taxpayers { get; private set; }
-
-        private ILoggerFactory _loggerFactory { get; set; }
 
         public AppDbContext(DbContextOptions options) : base(options) { }
     }

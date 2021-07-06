@@ -7,6 +7,6 @@ namespace TaxService.Domain.Model
         public int Id { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
-        public IEnumerable<Area> Areas { get; set; }
+        public IList<Area> Areas { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,25 +11,20 @@ namespace TaxService.Data.Repositories
     public class TaxpayerRepository : IAsyncRepository<Taxpayer>
     {
         private readonly AppDbContext _db;
-        private readonly IMapper _mapper;
-
-        public TaxpayerRepository(AppDbContext db, IMapper mapper)
+        
+        public TaxpayerRepository(AppDbContext db)
         {
             _db = db;
-            _mapper = mapper;
         }
 
         public Task<IQueryable<Taxpayer>> GetAllAsync(CancellationToken cancelationToken)
         {
-            return Task.FromResult(
-                _mapper.ProjectTo<Taxpayer>(_db.Taxpayers.AsNoTracking())
-            );
+            return Task.FromResult(_db.Taxpayers.AsNoTracking());
         }
 
         public async Task CreateAsync(Taxpayer item, CancellationToken cancelationToken)
         {
-            var taxpayer = _mapper.Map<Taxpayer>(item);
-            await _db.Taxpayers.AddAsync(taxpayer);
+            await _db.Taxpayers.AddAsync(item);
             await _db.SaveChangesAsync();
         }
 
@@ -43,14 +37,12 @@ namespace TaxService.Data.Repositories
 
         public async Task<Taxpayer> GetAsync(int id, CancellationToken cancelationToken)
         {
-            var taxpayer = await _db.Taxpayers.FindAsync(id);
-            return _mapper.Map<Taxpayer>(taxpayer);
+            return await _db.Taxpayers.FindAsync(id);
         }
 
         public async Task UpdateAsync(Taxpayer item, CancellationToken cancelationToken)
         {
-            var taxpayer = _mapper.Map<Taxpayer>(item);
-            _db.Attach(taxpayer);
+            _db.Attach(item);
             await _db.SaveChangesAsync();
         }
     }
