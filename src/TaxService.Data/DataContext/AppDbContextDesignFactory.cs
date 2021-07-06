@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Design;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using TaxService.Infrastructure.Configuration;
 
 namespace TaxService.Data.DataContext
@@ -12,7 +12,9 @@ namespace TaxService.Data.DataContext
             var config = new ConfigurationBuilder()
                 .AddAppConfiguration("Development")
                 .Build();
-            return new AppDbContext(config, new LoggerFactory());
+            var builder = new DbContextOptionsBuilder<AppDbContext>();
+            builder.UseNpgsql(config.GetConnectionString("Default"));
+            return new AppDbContext(builder.Options);
         }
     }
 }
