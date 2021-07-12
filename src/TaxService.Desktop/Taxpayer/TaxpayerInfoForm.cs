@@ -71,9 +71,9 @@ namespace TaxServiceDesktop.Taxpayer
             var dlg = new NewDocumentForm();
             dlg.ShowDialog();
 
-            if (dlg.name != null)
+            if (dlg.DocName != null)
             {
-                dgvAttachments.Rows.Add(new object[] { dlg.name, dlg.description, dlg.path });
+                dgvAttachments.Rows.Add(new object[] { dlg.DocName, dlg.DocDescription, dlg.DocPath });
             }
         }
 

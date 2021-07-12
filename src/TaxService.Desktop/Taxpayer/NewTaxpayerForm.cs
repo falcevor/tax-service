@@ -43,10 +43,11 @@ namespace TaxServiceDesktop.Taxpayer
                 CategoryId = 1, // TODO: загружать из справочников.
                 TaxTypeId = 1,
                 PlaceTypeId = 1,
+                AreaId = 1,
                 PlaceAddress = tbPlaceAddress.Text,
                 AdditionalInfo = tbAdditionalInfo.Text,
                 Percent = Int32.Parse(tbPercent.Text),
-                BeginDate = dtpDate.Value,
+                BeginDate = dtpDate.Value
                 //Documents = attach.ToArray() // Отдельно прикреплять документы
             };
 
@@ -71,9 +72,9 @@ namespace TaxServiceDesktop.Taxpayer
             var dlg = new NewDocumentForm();
             dlg.ShowDialog();
 
-            if (dlg.name != null)
+            if (dlg.DocName != null)
             {
-                dgvAttachments.Rows.Add(new object[] { dlg.name, dlg.description, dlg.path });
+                dgvAttachments.Rows.Add(new object[] { dlg.DocName, dlg.DocDescription, dlg.DocPath });
             }
         }
 

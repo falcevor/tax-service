@@ -62,6 +62,8 @@
             this.cbTaxpayerCategory = new System.Windows.Forms.ComboBox();
             this.cbTaxType = new System.Windows.Forms.ComboBox();
             this.cbPlaceType = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.cbTaxArea = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbAvatar)).BeginInit();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -71,9 +73,10 @@
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.Location = new System.Drawing.Point(419, 542);
+            this.btnOk.Location = new System.Drawing.Point(488, 706);
+            this.btnOk.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 23);
+            this.btnOk.Size = new System.Drawing.Size(88, 27);
             this.btnOk.TabIndex = 0;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -82,9 +85,10 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(508, 542);
+            this.btnCancel.Location = new System.Drawing.Point(593, 704);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.Size = new System.Drawing.Size(88, 27);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -93,9 +97,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(14, 58);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(31, 13);
+            this.label1.Size = new System.Drawing.Size(34, 15);
             this.label1.TabIndex = 2;
             this.label1.Text = "ИНН";
             // 
@@ -103,53 +108,59 @@
             // 
             this.tbINN.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbINN.Location = new System.Drawing.Point(15, 25);
+            this.tbINN.Location = new System.Drawing.Point(18, 77);
+            this.tbINN.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbINN.Name = "tbINN";
-            this.tbINN.Size = new System.Drawing.Size(479, 20);
+            this.tbINN.Size = new System.Drawing.Size(558, 23);
             this.tbINN.TabIndex = 3;
             // 
             // tbName
             // 
             this.tbName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbName.Location = new System.Drawing.Point(15, 103);
+            this.tbName.Location = new System.Drawing.Point(18, 167);
+            this.tbName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(479, 20);
+            this.tbName.Size = new System.Drawing.Size(558, 23);
             this.tbName.TabIndex = 5;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 87);
+            this.label2.Location = new System.Drawing.Point(14, 148);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 13);
+            this.label2.Size = new System.Drawing.Size(31, 15);
             this.label2.TabIndex = 4;
             this.label2.Text = "Имя";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 126);
+            this.label3.Location = new System.Drawing.Point(14, 193);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(60, 13);
+            this.label3.Size = new System.Drawing.Size(63, 15);
             this.label3.TabIndex = 6;
             this.label3.Text = "Категория";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 243);
+            this.label4.Location = new System.Drawing.Point(14, 328);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(140, 13);
+            this.label4.Size = new System.Drawing.Size(152, 15);
             this.label4.TabIndex = 10;
             this.label4.Text = "Место постановки на учет";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 282);
+            this.label6.Location = new System.Drawing.Point(14, 373);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(139, 13);
+            this.label6.Size = new System.Drawing.Size(150, 15);
             this.label6.TabIndex = 13;
             this.label6.Text = "Адрес постановки на учет";
             // 
@@ -157,17 +168,19 @@
             // 
             this.tbPlaceAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbPlaceAddress.Location = new System.Drawing.Point(15, 298);
+            this.tbPlaceAddress.Location = new System.Drawing.Point(18, 392);
+            this.tbPlaceAddress.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbPlaceAddress.Name = "tbPlaceAddress";
-            this.tbPlaceAddress.Size = new System.Drawing.Size(568, 20);
+            this.tbPlaceAddress.Size = new System.Drawing.Size(662, 23);
             this.tbPlaceAddress.TabIndex = 14;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 48);
+            this.label7.Location = new System.Drawing.Point(14, 103);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(30, 13);
+            this.label7.Size = new System.Drawing.Size(32, 15);
             this.label7.TabIndex = 15;
             this.label7.Text = "КПП";
             // 
@@ -175,27 +188,30 @@
             // 
             this.tbKPP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbKPP.Location = new System.Drawing.Point(15, 64);
+            this.tbKPP.Location = new System.Drawing.Point(18, 122);
+            this.tbKPP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbKPP.Name = "tbKPP";
-            this.tbKPP.Size = new System.Drawing.Size(479, 20);
+            this.tbKPP.Size = new System.Drawing.Size(558, 23);
             this.tbKPP.TabIndex = 16;
             // 
             // pbAvatar
             // 
             this.pbAvatar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pbAvatar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pbAvatar.BackgroundImage")));
-            this.pbAvatar.Location = new System.Drawing.Point(500, 13);
+            this.pbAvatar.Location = new System.Drawing.Point(583, 63);
+            this.pbAvatar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbAvatar.Name = "pbAvatar";
-            this.pbAvatar.Size = new System.Drawing.Size(83, 87);
+            this.pbAvatar.Size = new System.Drawing.Size(97, 100);
             this.pbAvatar.TabIndex = 17;
             this.pbAvatar.TabStop = false;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 360);
+            this.label5.Location = new System.Drawing.Point(14, 463);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(146, 13);
+            this.label5.Size = new System.Drawing.Size(156, 15);
             this.label5.TabIndex = 18;
             this.label5.Text = "Дополнительные сведения";
             // 
@@ -203,28 +219,31 @@
             // 
             this.tbAdditionalInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbAdditionalInfo.Location = new System.Drawing.Point(15, 376);
+            this.tbAdditionalInfo.Location = new System.Drawing.Point(18, 482);
+            this.tbAdditionalInfo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbAdditionalInfo.Multiline = true;
             this.tbAdditionalInfo.Name = "tbAdditionalInfo";
             this.tbAdditionalInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbAdditionalInfo.Size = new System.Drawing.Size(568, 58);
+            this.tbAdditionalInfo.Size = new System.Drawing.Size(662, 66);
             this.tbAdditionalInfo.TabIndex = 19;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 438);
+            this.label8.Location = new System.Drawing.Point(14, 553);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(66, 13);
+            this.label8.Size = new System.Drawing.Size(70, 15);
             this.label8.TabIndex = 21;
             this.label8.Text = "Документы";
             // 
             // tbChooseAvatar
             // 
             this.tbChooseAvatar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbChooseAvatar.Location = new System.Drawing.Point(500, 100);
+            this.tbChooseAvatar.Location = new System.Drawing.Point(583, 163);
+            this.tbChooseAvatar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbChooseAvatar.Name = "tbChooseAvatar";
-            this.tbChooseAvatar.Size = new System.Drawing.Size(83, 23);
+            this.tbChooseAvatar.Size = new System.Drawing.Size(97, 27);
             this.tbChooseAvatar.TabIndex = 22;
             this.tbChooseAvatar.Text = "Обзор...";
             this.tbChooseAvatar.UseVisualStyleBackColor = true;
@@ -232,9 +251,10 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(12, 321);
+            this.label9.Location = new System.Drawing.Point(14, 418);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(134, 13);
+            this.label9.Size = new System.Drawing.Size(142, 15);
             this.label9.TabIndex = 23;
             this.label9.Text = "Дата постановки на учет";
             // 
@@ -242,9 +262,10 @@
             // 
             this.dtpDate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dtpDate.Location = new System.Drawing.Point(15, 337);
+            this.dtpDate.Location = new System.Drawing.Point(18, 437);
+            this.dtpDate.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.dtpDate.Name = "dtpDate";
-            this.dtpDate.Size = new System.Drawing.Size(565, 20);
+            this.dtpDate.Size = new System.Drawing.Size(658, 23);
             this.dtpDate.TabIndex = 24;
             // 
             // panel1
@@ -254,9 +275,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.toolStrip1);
             this.panel1.Controls.Add(this.dgvAttachments);
-            this.panel1.Location = new System.Drawing.Point(17, 454);
+            this.panel1.Location = new System.Drawing.Point(20, 572);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(566, 87);
+            this.panel1.Size = new System.Drawing.Size(660, 126);
             this.panel1.TabIndex = 48;
             // 
             // toolStrip1
@@ -265,9 +287,9 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbtnAddDucument,
             this.tsbtnDeleteDocument});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 62);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 101);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(566, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(660, 25);
             this.toolStrip1.TabIndex = 43;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -302,8 +324,9 @@
             this.cmPath});
             this.dgvAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAttachments.Location = new System.Drawing.Point(0, 0);
+            this.dgvAttachments.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.dgvAttachments.Name = "dgvAttachments";
-            this.dgvAttachments.Size = new System.Drawing.Size(566, 87);
+            this.dgvAttachments.Size = new System.Drawing.Size(660, 126);
             this.dgvAttachments.TabIndex = 42;
             // 
             // cmName
@@ -327,9 +350,10 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 165);
+            this.label10.Location = new System.Drawing.Point(14, 238);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(120, 13);
+            this.label10.Size = new System.Drawing.Size(132, 15);
             this.label10.TabIndex = 49;
             this.label10.Text = "Тип налогообложения";
             // 
@@ -337,17 +361,19 @@
             // 
             this.tbPercent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbPercent.Location = new System.Drawing.Point(15, 220);
+            this.tbPercent.Location = new System.Drawing.Point(18, 302);
+            this.tbPercent.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbPercent.Name = "tbPercent";
-            this.tbPercent.Size = new System.Drawing.Size(568, 20);
+            this.tbPercent.Size = new System.Drawing.Size(662, 23);
             this.tbPercent.TabIndex = 51;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(14, 204);
+            this.label11.Location = new System.Drawing.Point(16, 283);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(106, 13);
+            this.label11.Size = new System.Drawing.Size(112, 15);
             this.label11.TabIndex = 52;
             this.label11.Text = "Процентная ставка";
             // 
@@ -360,9 +386,10 @@
             this.cbTaxpayerCategory.Items.AddRange(new object[] {
             "Организации",
             "Физическое лицо или индивидуальный предприниматель"});
-            this.cbTaxpayerCategory.Location = new System.Drawing.Point(15, 142);
+            this.cbTaxpayerCategory.Location = new System.Drawing.Point(18, 212);
+            this.cbTaxpayerCategory.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cbTaxpayerCategory.Name = "cbTaxpayerCategory";
-            this.cbTaxpayerCategory.Size = new System.Drawing.Size(568, 21);
+            this.cbTaxpayerCategory.Size = new System.Drawing.Size(662, 23);
             this.cbTaxpayerCategory.TabIndex = 53;
             // 
             // cbTaxType
@@ -377,9 +404,10 @@
             "Патентная система налогообложения",
             "Вмененная система налогообложения или единый налог на вмененный доход",
             "Единый сельскохозяйственный налог"});
-            this.cbTaxType.Location = new System.Drawing.Point(15, 181);
+            this.cbTaxType.Location = new System.Drawing.Point(18, 257);
+            this.cbTaxType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cbTaxType.Name = "cbTaxType";
-            this.cbTaxType.Size = new System.Drawing.Size(565, 21);
+            this.cbTaxType.Size = new System.Drawing.Size(662, 23);
             this.cbTaxType.TabIndex = 54;
             // 
             // cbPlaceType
@@ -395,16 +423,46 @@
             "По месту жительства",
             "По местонахождению имущества",
             "По местонахождению транспортных средств"});
-            this.cbPlaceType.Location = new System.Drawing.Point(15, 258);
+            this.cbPlaceType.Location = new System.Drawing.Point(18, 346);
+            this.cbPlaceType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cbPlaceType.Name = "cbPlaceType";
-            this.cbPlaceType.Size = new System.Drawing.Size(568, 21);
+            this.cbPlaceType.Size = new System.Drawing.Size(662, 23);
             this.cbPlaceType.TabIndex = 55;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(18, 9);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(94, 15);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "Налоговая зона";
+            // 
+            // cbTaxArea
+            // 
+            this.cbTaxArea.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbTaxArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTaxArea.FormattingEnabled = true;
+            this.cbTaxArea.Items.AddRange(new object[] {
+            "Общая система налогообложения",
+            "Упрощенная система налогообложения",
+            "Патентная система налогообложения",
+            "Вмененная система налогообложения или единый налог на вмененный доход",
+            "Единый сельскохозяйственный налог"});
+            this.cbTaxArea.Location = new System.Drawing.Point(18, 27);
+            this.cbTaxArea.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cbTaxArea.Name = "cbTaxArea";
+            this.cbTaxArea.Size = new System.Drawing.Size(662, 23);
+            this.cbTaxArea.TabIndex = 56;
             // 
             // NewTaxpayerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(597, 577);
+            this.ClientSize = new System.Drawing.Size(696, 745);
+            this.Controls.Add(this.cbTaxArea);
             this.Controls.Add(this.cbPlaceType);
             this.Controls.Add(this.cbTaxType);
             this.Controls.Add(this.cbTaxpayerCategory);
@@ -428,9 +486,11 @@
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tbINN);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "NewTaxpayerForm";
             this.Text = "Новый налогоплательщик";
             ((System.ComponentModel.ISupportInitialize)(this.pbAvatar)).EndInit();
@@ -479,5 +539,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cmName;
         private System.Windows.Forms.DataGridViewTextBoxColumn cmDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn cmPath;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ComboBox cbTaxArea;
     }
 }

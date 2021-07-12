@@ -18,6 +18,7 @@ namespace TaxService.Data.Extensions
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient<IAsyncRepository<Taxpayer>, TaxpayerRepository>();
             services.AddTransient<IAsyncRepository<ReportTemplate>, ReportTemplateRepository>();
+            services.AddTransient<IAsyncRepository<Area>, AreaRepository>();
 
             return services;
         }

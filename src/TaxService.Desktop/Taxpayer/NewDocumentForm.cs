@@ -1,14 +1,13 @@
 ﻿using System;
-using System.IO;
 using System.Windows.Forms;
 
 namespace TaxServiceDesktop.Taxpayer
 {
     public partial class NewDocumentForm : Form
     {
-        public string name;
-        public string description;
-        public string path;
+        public string DocName { get; set; }
+        public string DocDescription { get; set; }
+        public string DocPath { get; set; }
 
         public NewDocumentForm()
         {
@@ -21,7 +20,7 @@ namespace TaxServiceDesktop.Taxpayer
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 tbPath.Text = dlg.FileName;
-                tbName.Text = Path.GetFileName(dlg.FileName);
+                tbName.Text = System.IO.Path.GetFileName(dlg.FileName);
             }
         }
 
@@ -32,9 +31,9 @@ namespace TaxServiceDesktop.Taxpayer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            name = tbName.Text;
-            description = tbDescription.Text;
-            path = tbPath.Text;
+            DocName = tbName.Text;
+            DocDescription = tbDescription.Text;
+            DocPath = tbPath.Text;
             Close();
         }
     }

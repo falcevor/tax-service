@@ -22,10 +22,11 @@ namespace TaxService.Data.Repositories
             return Task.FromResult(_db.ReportTemplates.AsNoTracking());
         }
 
-        public async Task CreateAsync(ReportTemplate item, CancellationToken cancelationToken)
+        public async Task<int> CreateAsync(ReportTemplate item, CancellationToken cancelationToken)
         {
             await _db.ReportTemplates.AddAsync(item);
             await _db.SaveChangesAsync();
+            return item.Id;
         }
 
         public async Task DeleteAsync(int id, CancellationToken cancelationToken)

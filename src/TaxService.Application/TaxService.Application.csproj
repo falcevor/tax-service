@@ -16,4 +16,8 @@
     <ProjectReference Include="..\TaxService.Domain\TaxService.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\AreaFeature\Queries\" />
+  </ItemGroup>
+
 </Project>
