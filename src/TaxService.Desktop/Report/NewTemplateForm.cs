@@ -62,7 +62,7 @@ namespace TaxServiceDesktop.Report
             {
                 await _client.CreateReportTemplateAsync(info);
                 Close();
-            } 
+            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка сохранения\n{ex.Message}");

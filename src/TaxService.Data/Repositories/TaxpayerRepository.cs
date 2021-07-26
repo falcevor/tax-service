@@ -11,7 +11,7 @@ namespace TaxService.Data.Repositories
     public class TaxpayerRepository : IAsyncRepository<Taxpayer>
     {
         private readonly AppDbContext _db;
-        
+
         public TaxpayerRepository(AppDbContext db)
         {
             _db = db;

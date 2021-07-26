@@ -30,7 +30,7 @@ namespace TaxService.Data.Extensions
 
             if (config.GetValue("UseInMemoryDatabase", false))
             {
-                
+
                 var serviceProvider = services
                     .AddEntityFrameworkInMemoryDatabase()
                     .BuildServiceProvider();
@@ -47,7 +47,7 @@ namespace TaxService.Data.Extensions
                     .UseNpgsql(connection)
                     .UseLoggerFactory(logFactory));
             }
-            
+
             return services;
         }
     }

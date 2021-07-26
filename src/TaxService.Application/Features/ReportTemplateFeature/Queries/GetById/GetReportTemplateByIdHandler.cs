@@ -21,7 +21,7 @@ namespace TaxService.Application.Features.ReportTemplateFeature.Queries.GetById
         public async Task<GetReportTemplateByIdResponse> Handle(GetReportTemplateByIdQuery request, CancellationToken cancellationToken)
         {
             return _mapper.Map<GetReportTemplateByIdResponse>(await _repo.GetAsync(request.Id, cancellationToken));
-            
+
         }
     }
 }

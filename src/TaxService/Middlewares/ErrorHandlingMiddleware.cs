@@ -13,8 +13,8 @@ namespace TaxService.Middlewares
             {
                 await next.Invoke(context);
             }
-            catch (ApplicationException ex) 
-            { 
+            catch (ApplicationException ex)
+            {
                 switch (ex)
                 {
                     case NotFoundException:

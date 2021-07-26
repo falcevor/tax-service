@@ -28,7 +28,7 @@ namespace TaxServiceDesktop.Taxpayer
                 if (string.IsNullOrEmpty(path)) continue;
 
                 attach.Add(new Document()
-                { 
+                {
                     Name = Convert.ToString(row.Cells[0].Value),
                     Description = Convert.ToString(row.Cells[1].Value),
                     File = File.ReadAllBytes(path)
