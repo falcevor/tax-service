@@ -20,26 +20,20 @@ namespace TaxService
                 .ConfigureWebHostDefaults(webBuilder => 
                     webBuilder.UseStartup<Startup>()
                 )
-                .ConfigureAppConfiguration(configBuilder => 
-                    configBuilder.AddAppConfiguration(GetEnvironment())
+                .ConfigureAppConfiguration((context, builder) => 
+                    builder.AddAppConfiguration(context.HostingEnvironment.EnvironmentName)
                 )
                 .ConfigureLogging(ConfigureLogging);
 
-
-        private static void ConfigureLogging(ILoggingBuilder loggingBuilder)
+        private static void ConfigureLogging(HostBuilderContext context, ILoggingBuilder loggingBuilder)
         {
             var config = new ConfigurationBuilder()
-                .AddAppConfiguration(GetEnvironment())
+                .AddAppConfiguration(context.HostingEnvironment.EnvironmentName)
                 .Build();
             var logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(config)
                 .CreateLogger();
             loggingBuilder.AddSerilog(logger);
-        }
-
-        private static string GetEnvironment()
-        {
-            return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
         }
     }
 }
