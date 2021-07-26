@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using TaxService.Infrastructure.Configuration;
+using System.Reflection;
 
 namespace TaxService.Data.DataContext
 {
@@ -10,10 +10,10 @@ namespace TaxService.Data.DataContext
         public AppDbContext CreateDbContext(string[] args)
         {
             var config = new ConfigurationBuilder()
-                .AddAppConfiguration("Development")
+                .AddUserSecrets(Assembly.GetExecutingAssembly())
                 .Build();
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseNpgsql(config.GetConnectionString("Default"));
+            builder.UseNpgsql(config.GetConnectionString("DefaultConnection"));
             return new AppDbContext(builder.Options);
         }
     }
