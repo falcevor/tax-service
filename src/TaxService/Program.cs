@@ -1,9 +1,6 @@
-using System;
 using Serilog;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using TaxService.Infrastructure.Configuration;
 
 namespace TaxService
@@ -20,26 +17,11 @@ namespace TaxService
                 .ConfigureWebHostDefaults(webBuilder => 
                     webBuilder.UseStartup<Startup>()
                 )
-                .ConfigureAppConfiguration(configBuilder => 
-                    configBuilder.AddAppConfiguration(GetEnvironment())
+                .ConfigureAppConfiguration((context, builder) => 
+                    builder.ConfigureWithSubstitution(context)
                 )
-                .ConfigureLogging(ConfigureLogging);
-
-
-        private static void ConfigureLogging(ILoggingBuilder loggingBuilder)
-        {
-            var config = new ConfigurationBuilder()
-                .AddAppConfiguration(GetEnvironment())
-                .Build();
-            var logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(config)
-                .CreateLogger();
-            loggingBuilder.AddSerilog(logger);
-        }
-
-        private static string GetEnvironment()
-        {
-            return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
-        }
+                .UseSerilog((context, services, builder) => builder
+                    .ReadFrom.Configuration(context.Configuration)
+                    .ReadFrom.Services(services));
     }
 }
