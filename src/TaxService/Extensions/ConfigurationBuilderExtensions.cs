@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace TaxService.Infrastructure.Configuration
 {
-    public static class AppConfigurationExtenisions
+    public static class ConfigurationBuilderExtensions
     {
         public static IConfigurationBuilder ConfigureWithSubstitution(this IConfigurationBuilder builder, HostBuilderContext context)
         {

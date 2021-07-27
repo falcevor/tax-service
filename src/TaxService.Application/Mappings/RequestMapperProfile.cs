@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using TaxService.Application.Features.ReportTemplateFeature.Queries.GetAll;
 using TaxService.Application.Features.TaxpayerFeature.Commands.Create;
 using TaxService.Application.Features.TaxpayerFeature.Commands.Update;
 using TaxService.Application.Features.TaxpayerFeature.Queries.GetAll;
@@ -11,10 +12,12 @@ namespace TaxService.Application.Mappings
     {
         public RequestMapperProfile()
         {
-            CreateMap<CreateTaxpayerCommand, Taxpayer>();
-            CreateMap<UpdateTaxpayerCommand, Taxpayer>();
-            CreateMap<Taxpayer, GetTaxpayerByIdResponse>();
-            CreateMap<Taxpayer, GetTaxpayersResponse>();
+            CreateMap<CreateTaxpayerCommand, Taxpayer>().ReverseMap();
+            CreateMap<UpdateTaxpayerCommand, Taxpayer>().ReverseMap();
+            CreateMap<Taxpayer, GetTaxpayerByIdResponse>().ReverseMap();
+            CreateMap<Taxpayer, GetTaxpayersResponse>().ReverseMap();
+            CreateMap<ReportTemplate, GetReportTemplatesResponse>().ReverseMap();
+            
         }
     }
 }
