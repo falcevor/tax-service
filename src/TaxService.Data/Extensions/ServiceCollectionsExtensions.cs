@@ -18,6 +18,7 @@ namespace TaxService.Data.Extensions
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient<IAsyncRepository<Taxpayer>, TaxpayerRepository>();
             services.AddTransient<IAsyncRepository<ReportTemplate>, ReportTemplateRepository>();
+            services.AddTransient<IAsyncRepository<Area>, AreaRepository>();
 
             return services;
         }
@@ -29,7 +30,7 @@ namespace TaxService.Data.Extensions
 
             if (config.GetValue("UseInMemoryDatabase", false))
             {
-                
+
                 var serviceProvider = services
                     .AddEntityFrameworkInMemoryDatabase()
                     .BuildServiceProvider();
@@ -46,7 +47,7 @@ namespace TaxService.Data.Extensions
                     .UseNpgsql(connection)
                     .UseLoggerFactory(logFactory));
             }
-            
+
             return services;
         }
     }

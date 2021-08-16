@@ -19,21 +19,21 @@ namespace FunctionalTests.Web.v1.Controllers
         }
 
         [Fact]
-        public async Task ReturnsNothingByUnknownId()
+        public async Task Should_return_nothing_by_unknown_id()
         {
             var response = await _client.GetAsync(_actionUrl + "?id=64");
             Assert.Empty(await response.Content.ReadAsStringAsync());
         }
 
         [Fact]
-        public async Task Returns404NotFoundByUnknownId()
+        public async Task Should_return_404NotFound_by_unknown_id()
         {
             var response = await _client.GetAsync(_actionUrl + "?id=64");
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
         [Fact]
-        public async Task ReturnsTaxpayerJsonByKnownId()
+        public async Task Should_return_taxpayer_json_by_known_id()
         {
             var response = await _client.GetFromJsonAsync<GetTaxpayerByIdResponse>(_actionUrl + "?id=1");
             Assert.Equal(1, response.Id);
@@ -41,7 +41,7 @@ namespace FunctionalTests.Web.v1.Controllers
         }
 
         [Fact]
-        public async Task Returns200OkByKnownId()
+        public async Task Should_return_200Ok_by_known_id()
         {
             var response = await _client.GetAsync(_actionUrl + "?id=1");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

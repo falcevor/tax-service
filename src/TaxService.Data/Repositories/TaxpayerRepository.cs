@@ -11,7 +11,7 @@ namespace TaxService.Data.Repositories
     public class TaxpayerRepository : IAsyncRepository<Taxpayer>
     {
         private readonly AppDbContext _db;
-        
+
         public TaxpayerRepository(AppDbContext db)
         {
             _db = db;
@@ -22,10 +22,11 @@ namespace TaxService.Data.Repositories
             return Task.FromResult(_db.Taxpayers.AsNoTracking());
         }
 
-        public async Task CreateAsync(Taxpayer item, CancellationToken cancelationToken)
+        public async Task<int> CreateAsync(Taxpayer item, CancellationToken cancelationToken)
         {
             await _db.Taxpayers.AddAsync(item);
             await _db.SaveChangesAsync();
+            return item.Id;
         }
 
         public async Task DeleteAsync(int id, CancellationToken cancelationToken)

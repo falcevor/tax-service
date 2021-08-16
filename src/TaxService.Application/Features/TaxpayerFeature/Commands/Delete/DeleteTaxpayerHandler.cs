@@ -8,7 +8,7 @@ namespace TaxService.Application.Features.TaxpayerFeature.Commands.Delete
 {
     public class DeleteTaxpayerHandler : IRequestHandler<DeleteTaxpayerCommand>
     {
-        private readonly IAsyncRepository<Taxpayer>  _repo;
+        private readonly IAsyncRepository<Taxpayer> _repo;
 
         public DeleteTaxpayerHandler(IAsyncRepository<Taxpayer> repo)
         {

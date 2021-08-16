@@ -1,6 +1,7 @@
-using Serilog;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using TaxService.Data.Extensions;
 using TaxService.Infrastructure.Configuration;
 
 namespace TaxService
@@ -9,15 +10,17 @@ namespace TaxService
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            host.MigrateDbContexts();
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => 
+                .ConfigureWebHostDefaults(webBuilder =>
                     webBuilder.UseStartup<Startup>()
                 )
-                .ConfigureAppConfiguration((context, builder) => 
+                .ConfigureAppConfiguration((context, builder) =>
                     builder.ConfigureWithSubstitution(context)
                 )
                 .UseSerilog((context, services, builder) => builder

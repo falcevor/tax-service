@@ -24,8 +24,8 @@ namespace TaxService
         }
 
         public void Configure(
-            IApplicationBuilder app, 
-            IWebHostEnvironment env, 
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
             IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())

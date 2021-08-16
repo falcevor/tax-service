@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace TaxService.Infrastructure.Configuration
 {
-    public static class AppConfigurationExtenisions
+    public static class ConfigurationBuilderExtensions
     {
         public static IConfigurationBuilder ConfigureWithSubstitution(this IConfigurationBuilder builder, HostBuilderContext context)
         {
@@ -16,7 +16,7 @@ namespace TaxService.Infrastructure.Configuration
                     c => c.AddUserSecrets(Assembly.GetExecutingAssembly())
                 )
                 .WithSubstitution(
-                    c => c.AddJsonFile($"appsettings.json",       optional: true, reloadOnChange: true)
+                    c => c.AddJsonFile($"appsettings.json", optional: true, reloadOnChange: true)
                           .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true)
                           .AddEnvironmentVariables()
                 );

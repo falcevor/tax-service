@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Net.Http;
 using System.Windows.Forms;
-using TaxService.Client;
 
 namespace TaxServiceDesktop
 {
@@ -14,7 +12,7 @@ namespace TaxServiceDesktop
 
         private void btnEnter_Click(object sender, EventArgs e)
         {
-            
+
             var login = tbLogin.Text;
             var pass = tbPassword.Text;
 

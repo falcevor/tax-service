@@ -21,7 +21,7 @@ namespace TaxService.Extensions
         }
 
         public static IApplicationBuilder UseAppSwaggerMiddleware(
-            this IApplicationBuilder builder, 
+            this IApplicationBuilder builder,
             IApiVersionDescriptionProvider provider)
         {
             builder.UseSwagger();
