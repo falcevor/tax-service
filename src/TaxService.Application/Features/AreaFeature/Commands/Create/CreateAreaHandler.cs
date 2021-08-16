@@ -6,7 +6,7 @@ using TaxService.Domain.Model;
 
 namespace TaxService.Application.Features.AreaFeature.Commands.Create
 {
-    class CreateAreaHandler : IRequestHandler<CreateAreaCommand, int>
+    public class CreateAreaHandler : IRequestHandler<CreateAreaCommand, int>
     {
         private readonly IAsyncRepository<Area> _repo;
 

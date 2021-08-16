@@ -19,14 +19,14 @@ namespace FunctionalTests.Web.v1.Controllers
         }
 
         [Fact]
-        public async Task Returns200Ok()
+        public async Task Should_Return_200Ok()
         {
             var response = await _client.GetAsync(_actionUrl);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Fact]
-        public async Task ReturnsTaxpayerCollection()
+        public async Task Should_Return_Taxpayer_Collection()
         {
             var response = await _client.GetFromJsonAsync<IEnumerable<GetTaxpayersResponse>>(_actionUrl);
             Assert.NotEmpty(response);
