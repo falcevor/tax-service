@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using Moq;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using TaxService.Application.Features.ReportTemplateFeature.Queries.GetAll;
+using TaxService.Application.Exceptions;
+using TaxService.Application.Features.ReportTemplateFeature.Queries.GetById;
 using TaxService.Application.Mappings;
 using TaxService.Application.Repositories;
 using TaxService.Domain.Model;
@@ -13,7 +13,7 @@ using Xunit;
 
 namespace UnitTests.Application.Features.ReportTemplateFeature
 {
-    public class GetReportTemplatesTests
+    public class GetReportTemplateByIdTests
     {
         private const int TemplateId = 13;
         private const string Description = "Description";
@@ -28,55 +28,44 @@ namespace UnitTests.Application.Features.ReportTemplateFeature
         public async Task Should_call_repository_method()
         {
             var repo = new Mock<IAsyncRepository<ReportTemplate>>();
+            repo.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(GetTestData()));
             var command = CreateTestCommand();
             var mapper = ConfigureMapper();
-            var handler = new GetReportTemplatesHandler(repo.Object, mapper);
+            var handler = new GetReportTemplateByIdHandler(repo.Object, mapper);
 
             await handler.Handle(command, CancellationToken.None);
 
-            repo.Verify(x => x.GetAllAsync(It.IsAny<CancellationToken>()));
+            repo.Verify(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()));
         }
 
         [Fact]
         public async Task Should_use_predefined_CancellationToken()
         {
             var repo = new Mock<IAsyncRepository<ReportTemplate>>();
+            repo.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(GetTestData()));
             var command = CreateTestCommand();
             var mapper = ConfigureMapper();
-            var handler = new GetReportTemplatesHandler(repo.Object, mapper);
+            var handler = new GetReportTemplateByIdHandler(repo.Object, mapper);
             var predefinedCancellationToken = new CancellationTokenSource().Token;
 
             await handler.Handle(command, predefinedCancellationToken);
 
-            repo.Verify(x => x.GetAllAsync(predefinedCancellationToken));
-        }
-
-        [Fact]
-        public async Task Should_return_collection_with_correct_size()
-        {
-            var repo = new Mock<IAsyncRepository<ReportTemplate>>();
-            repo.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(GetTestData().AsQueryable()));
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new GetReportTemplatesHandler(repo.Object, mapper);
-
-            var templates = await handler.Handle(command, CancellationToken.None);
-
-            templates.Should().HaveCount(2);
+            repo.Verify(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()));
         }
 
         [Fact]
         public async Task Should_correctly_map_response_fields()
         {
             var repo = new Mock<IAsyncRepository<ReportTemplate>>();
-            repo.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(GetTestData().AsQueryable()));
+            repo.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(GetTestData()));
             var command = CreateTestCommand();
             var mapper = ConfigureMapper();
-            var handler = new GetReportTemplatesHandler(repo.Object, mapper);
+            var handler = new GetReportTemplateByIdHandler(repo.Object, mapper);
 
-            var template = (await handler.Handle(command, CancellationToken.None)).First();
+            var template = await handler.Handle(command, CancellationToken.None);
 
             template.Id.Should().Be(TemplateId);
             template.Name.Should().Be(TemplateName);
@@ -89,9 +78,25 @@ namespace UnitTests.Application.Features.ReportTemplateFeature
             template.Parameters.First().Name.Should().Be(ParameterName);
         }
 
-        public GetReportTemplatesQuery CreateTestCommand()
+        [Fact]
+        public async Task Should_throw_NotFoundException_if_value_not_found()
         {
-            return new GetReportTemplatesQuery();
+            var repo = new Mock<IAsyncRepository<ReportTemplate>>();
+            var mapper = ConfigureMapper();
+            var command = CreateTestCommand();
+            var handler = new GetReportTemplateByIdHandler(repo.Object, mapper);
+
+            await handler.Invoking(async x => await x.Handle(command, CancellationToken.None))
+                .Should()
+                .ThrowAsync<NotFoundException>();
+        }
+
+        public GetReportTemplateByIdQuery CreateTestCommand()
+        {
+            return new GetReportTemplateByIdQuery() 
+            { 
+                Id = 13
+            };
         }
 
         private IMapper ConfigureMapper()
@@ -102,27 +107,9 @@ namespace UnitTests.Application.Features.ReportTemplateFeature
             return new Mapper(config);
         }
 
-        private IEnumerable<ReportTemplate> GetTestData()
+        private ReportTemplate GetTestData()
         {
-            yield return new ReportTemplate()
-            {
-                Id = TemplateId,
-                Description = Description,
-                Name = TemplateName,
-                File = TemplateFile,
-                Parameters = new[]
-                {
-                    new ReportTemplateParameter()
-                    {
-                        Id = ParameterId,
-                        Name = ParameterName,
-                        Description = ParameterDescription,
-                        DefaultValue = ParameterDefaultValue
-                    }
-                }
-            };
-
-            yield return new ReportTemplate()
+            return new ReportTemplate()
             {
                 Id = TemplateId,
                 Description = Description,
