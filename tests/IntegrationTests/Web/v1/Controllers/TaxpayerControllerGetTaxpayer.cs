@@ -4,6 +4,9 @@ using Xunit;
 using System.Net;
 using System.Net.Http.Json;
 using TaxService.Application.Features.TaxpayerFeature.Queries.GetById;
+using FluentAssertions;
+using TaxService.Application.Features.TaxpayerFeature.Queries.GetAll;
+using System.Collections.Generic;
 
 namespace FunctionalTests.Web.v1.Controllers
 {
@@ -11,7 +14,7 @@ namespace FunctionalTests.Web.v1.Controllers
     public class TaxpayerControllerGetTaxpayer : IClassFixture<TestWebServer>
     {
         private readonly HttpClient _client;
-        private readonly string _actionUrl = "/api/v1/Taxpayer/GetTaxpayer";
+        private readonly string _controllerUrl = "/api/v1/Taxpayer";
 
         public TaxpayerControllerGetTaxpayer(TestWebServer factory)
         {
@@ -19,32 +22,56 @@ namespace FunctionalTests.Web.v1.Controllers
         }
 
         [Fact]
-        public async Task Should_return_nothing_by_unknown_id()
+        public async Task GetTaxpayer_should_return_nothing_by_unknown_id()
         {
-            var response = await _client.GetAsync(_actionUrl + "?id=64");
-            Assert.Empty(await response.Content.ReadAsStringAsync());
+            var response = await _client.GetAsync(_controllerUrl + "/GetTaxpayer?id=64");
+            var content = await response.Content.ReadAsStringAsync();
+
+            content.Should().BeEmpty();
         }
 
         [Fact]
-        public async Task Should_return_404NotFound_by_unknown_id()
+        public async Task GetTaxpayer_should_return_404NotFound_by_unknown_id()
         {
-            var response = await _client.GetAsync(_actionUrl + "?id=64");
-            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+            var response = await _client.GetAsync(_controllerUrl + "/GetTaxpayer?id=64");
+
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]
-        public async Task Should_return_taxpayer_json_by_known_id()
+        public async Task GetTaxpayer_should_return_taxpayer_json_by_known_id()
         {
-            var response = await _client.GetFromJsonAsync<GetTaxpayerByIdResponse>(_actionUrl + "?id=1");
-            Assert.Equal(1, response.Id);
-            Assert.Equal("Ivanov Ivan Ivanovich", response.Name);
+            var response = await _client.GetFromJsonAsync<GetTaxpayerByIdResponse>(_controllerUrl + "/GetTaxpayer?id=1");
+
+            response.Id.Should().Be(1);
+            response.Name.Should().Be("Ivanov Ivan Ivanovich");
         }
 
         [Fact]
-        public async Task Should_return_200Ok_by_known_id()
+        public async Task GetTaxpayer_should_return_200Ok_by_known_id()
         {
-            var response = await _client.GetAsync(_actionUrl + "?id=1");
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var response = await _client.GetAsync(_controllerUrl + "/GetTaxpayer?id=1");
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task GetTaxpayers_should_return_200Ok()
+        {
+            var response = await _client.GetAsync(_controllerUrl + "/GetTaxpayers");
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task GetTaxpayers_should_return_taxpayer_collection()
+        {
+            var response = await _client.GetFromJsonAsync<IEnumerable<GetTaxpayersResponse>>(_controllerUrl + "/GetTaxpayers");
+
+            response.Should().HaveCount(3);
+            response.Should().Contain(x => x.Id == 1);
+            response.Should().Contain(x => x.Id == 2);
+            response.Should().Contain(x => x.Id == 3);
         }
     }
 }

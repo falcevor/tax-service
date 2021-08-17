@@ -22,8 +22,6 @@ namespace FunctionalTests.Web
                 o.UseEnvironment("Testing");
                 o.UseSetting("UseInMemoryDatabase", "true");
 
-                o.ConfigureAppConfiguration((context, builder) => 
-                    builder.Properties["UseInMemoryDatabase"] = true);
                 o.ConfigureServices(services =>
                 {
                         var sp = services.BuildServiceProvider();
