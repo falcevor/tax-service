@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace FunctionalTests.Web.v1.Controllers
 {
     [Collection("TaxpayerFeature")]
-    public class TaxpayerControllerGetTaxpayer : IClassFixture<TestWebServer>
+    public class TaxpayerControllerTests : IClassFixture<TestWebServer>
     {
         private readonly HttpClient _client;
         private readonly string _controllerUrl = "/api/v1/Taxpayer";
 
-        public TaxpayerControllerGetTaxpayer(TestWebServer factory)
+        public TaxpayerControllerTests(TestWebServer factory)
         {
             _client = factory.Client;
         }
