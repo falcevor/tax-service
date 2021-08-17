@@ -1,19 +1,17 @@
-﻿using AutoMapper;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TaxService.Application.Exceptions;
 using TaxService.Application.Features.TaxpayerFeature.Queries.GetById;
-using TaxService.Application.Mappings;
 using TaxService.Application.Repositories;
 using TaxService.Domain.Model;
 using Xunit;
 
 namespace UnitTests.Application.Features.TaxpayerFeature
 {
-    public class GetTaxpayerByIdTests
+    public class GetTaxpayerByIdTests : FeatureTestBase
     {
         private const string Name = "Name";
         private const string AdditionalInfo = "AdditionalInfo";
@@ -28,48 +26,51 @@ namespace UnitTests.Application.Features.TaxpayerFeature
         private const int TaxTypeId = 43;
         private DateTime BeginDate = DateTime.Now;
 
+        private Mock<IAsyncRepository<Taxpayer>> _repoMock;
+        private GetTaxpayerByIdQuery _query;
+        private GetTaxpayerByIdHandler _handler;
+
+        public GetTaxpayerByIdTests()
+        {
+            _repoMock = new Mock<IAsyncRepository<Taxpayer>>();
+            _query = new GetTaxpayerByIdQuery()
+            {
+                Id = 13
+            };
+            var mapper = ConfigureMapper();
+            _handler = new GetTaxpayerByIdHandler(_repoMock.Object, mapper);
+        }
+
         [Fact]
         public async Task Should_call_repository_method()
         {
-            var repo = new Mock<IAsyncRepository<Taxpayer>>();
-            repo.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            _repoMock.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(GetTestData()));
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new GetTaxpayerByIdHandler(repo.Object, mapper);
 
-            await handler.Handle(command, CancellationToken.None);
+            await _handler.Handle(_query, CancellationToken.None);
 
-            repo.Verify(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()));
+            _repoMock.Verify(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()));
         }
 
         [Fact]
         public async Task Should_use_predefined_CancellationToken()
         {
-            var repo = new Mock<IAsyncRepository<Taxpayer>>();
-            repo.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            _repoMock.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(GetTestData()));
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new GetTaxpayerByIdHandler(repo.Object, mapper);
             var predefinedCancellationToken = new CancellationTokenSource().Token;
 
-            await handler.Handle(command, predefinedCancellationToken);
+            await _handler.Handle(_query, predefinedCancellationToken);
 
-            repo.Verify(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()));
+            _repoMock.Verify(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()));
         }
 
         [Fact]
         public async Task Should_correctly_map_response_fields()
         {
-            var repo = new Mock<IAsyncRepository<Taxpayer>>();
-            repo.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            _repoMock.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(GetTestData()));
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new GetTaxpayerByIdHandler(repo.Object, mapper);
 
-            var taxpayer = await handler.Handle(command, CancellationToken.None);
+            var taxpayer = await _handler.Handle(_query, CancellationToken.None);
 
             taxpayer.Id.Should().Be(TaxpayerId);
             taxpayer.Name.Should().Be(Name);
@@ -79,7 +80,6 @@ namespace UnitTests.Application.Features.TaxpayerFeature
             taxpayer.Kpp.Should().Be(Kpp);
             taxpayer.Percent.Should().Be(Percent);
             taxpayer.PlaceAddress.Should().Be(PlaceAddress);
-
             taxpayer.Area.Id.Should().Be(AreaId);
             taxpayer.Category.Id.Should().Be(CategoryId);
             taxpayer.PlaceType.Id.Should().Be(PlaceTypeId);
@@ -89,30 +89,12 @@ namespace UnitTests.Application.Features.TaxpayerFeature
         [Fact]
         public async Task Should_throw_NotFoundException_if_value_not_found()
         {
-            var repo = new Mock<IAsyncRepository<Taxpayer>>();
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new GetTaxpayerByIdHandler(repo.Object, mapper);
+            _repoMock.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult((Taxpayer)null));
 
-            await handler.Invoking(async x => await x.Handle(command, CancellationToken.None))
+            await _handler.Invoking(async x => await x.Handle(_query, CancellationToken.None))
                 .Should()
                 .ThrowAsync<NotFoundException>();
-        }
-
-        public GetTaxpayerByIdQuery CreateTestCommand()
-        {
-            return new GetTaxpayerByIdQuery() 
-            { 
-                Id = 13
-            };
-        }
-
-        private IMapper ConfigureMapper()
-        {
-            var config = new MapperConfiguration(cfg =>
-                cfg.AddProfile<RequestMapperProfile>()
-            );
-            return new Mapper(config);
         }
 
         private Taxpayer GetTestData()

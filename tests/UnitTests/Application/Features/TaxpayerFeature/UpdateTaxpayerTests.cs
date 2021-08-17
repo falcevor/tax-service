@@ -1,17 +1,15 @@
-﻿using AutoMapper;
-using Moq;
+﻿using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TaxService.Application.Features.TaxpayerFeature.Commands.Update;
-using TaxService.Application.Mappings;
 using TaxService.Application.Repositories;
 using TaxService.Domain.Model;
 using Xunit;
 
 namespace UnitTests.Application.Features.TaxpayerFeature
 {
-    public class UpdateTaxpayerTests
+    public class UpdateTaxpayerTests : FeatureTestBase
     {
         private const string Name = "Name";
         private const string AdditionalInfo = "AdditionalInfo";
@@ -25,56 +23,54 @@ namespace UnitTests.Application.Features.TaxpayerFeature
         private const int TaxTypeId = 43;
         private DateTime BeginDate = DateTime.Now;
 
+        private Mock<IAsyncRepository<Taxpayer>> _repoMock;
+        private UpdateTaxpayerCommand _command;
+        private UpdateTaxpayerHandler _handler;
+
+        public UpdateTaxpayerTests()
+        {
+            _repoMock = new Mock<IAsyncRepository<Taxpayer>>();
+            _command = CreateTestCommand();
+            var mapper = ConfigureMapper();
+            _handler = new UpdateTaxpayerHandler(_repoMock.Object, mapper);
+        }
+
         [Fact]
         public async Task Should_call_repository_method()
         {
-            var repo = new Mock<IAsyncRepository<Taxpayer>>();
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new UpdateTaxpayerHandler(repo.Object, mapper);
+            await _handler.Handle(_command, CancellationToken.None);
 
-            await handler.Handle(command, CancellationToken.None);
-
-            repo.Verify(x => x.UpdateAsync(It.IsAny<Taxpayer>(), It.IsAny<CancellationToken>()));
+            _repoMock.Verify(x => x.UpdateAsync(It.IsAny<Taxpayer>(), It.IsAny<CancellationToken>()));
         }
 
         [Fact]
         public async Task Should_use_predefined_CancellationToken()
         {
-            var repo = new Mock<IAsyncRepository<Taxpayer>>();
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new UpdateTaxpayerHandler(repo.Object, mapper);
             var token = new CancellationTokenSource().Token;
 
-            await handler.Handle(command, token);
+            await _handler.Handle(_command, token);
 
-            repo.Verify(x => x.UpdateAsync(It.IsAny<Taxpayer>(), token));
+            _repoMock.Verify(x => x.UpdateAsync(It.IsAny<Taxpayer>(), token));
         }
 
         [Fact]
         public async Task Should_correctly_map_command_fields()
         {
-            var repo = new Mock<IAsyncRepository<Taxpayer>>();
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new UpdateTaxpayerHandler(repo.Object, mapper);
+            await _handler.Handle(_command, CancellationToken.None);
 
-            await handler.Handle(command, CancellationToken.None);
-
-            repo.Verify(x => x.UpdateAsync(
-                It.Is<Taxpayer>(template =>
-                       template.Name == Name
-                    && template.AdditionalInfo == AdditionalInfo
-                    && template.AreaId == AreaId
-                    && template.BeginDate == BeginDate
-                    && template.CategoryId == CategoryId
-                    && template.Inn == Inn
-                    && template.Kpp == Kpp
-                    && template.Percent == Percent
-                    && template.PlaceAddress == PlaceAddress
-                    && template.PlaceTypeId == PlaceTypeId
-                    && template.TaxTypeId == TaxTypeId),
+            _repoMock.Verify(x => x.UpdateAsync(
+                It.Is<Taxpayer>(taxpayer =>
+                       taxpayer.Name == Name
+                    && taxpayer.AdditionalInfo == AdditionalInfo
+                    && taxpayer.AreaId == AreaId
+                    && taxpayer.BeginDate == BeginDate
+                    && taxpayer.CategoryId == CategoryId
+                    && taxpayer.Inn == Inn
+                    && taxpayer.Kpp == Kpp
+                    && taxpayer.Percent == Percent
+                    && taxpayer.PlaceAddress == PlaceAddress
+                    && taxpayer.PlaceTypeId == PlaceTypeId
+                    && taxpayer.TaxTypeId == TaxTypeId),
                 It.IsAny<CancellationToken>()));
         }
 
@@ -94,14 +90,6 @@ namespace UnitTests.Application.Features.TaxpayerFeature
                 PlaceTypeId = PlaceTypeId,
                 TaxTypeId = TaxTypeId
             };
-        }
-
-        private IMapper ConfigureMapper()
-        {
-            var config = new MapperConfiguration(cfg =>
-                cfg.AddProfile<RequestMapperProfile>()
-            );
-            return new Mapper(config);
         }
     }
 }

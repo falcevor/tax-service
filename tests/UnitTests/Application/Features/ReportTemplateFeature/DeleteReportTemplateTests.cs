@@ -8,53 +8,48 @@ using Xunit;
 
 namespace UnitTests.Application.Features.ReportTemplateFeature
 {
-    public class DeleteReportTemplateTests
+    public class DeleteReportTemplateTests : FeatureTestBase
     {
         private const int TempalateId = 13;
+
+        private Mock<IAsyncRepository<ReportTemplate>> _repoMock;
+        private DeleteReportTemplateCommand _command;
+        private DeleteReportTemplateHandler _handler;
+
+        public DeleteReportTemplateTests()
+        {
+            _repoMock = new Mock<IAsyncRepository<ReportTemplate>>();
+            _command = new DeleteReportTemplateCommand()
+            {
+                Id = TempalateId
+            };
+            _handler = new DeleteReportTemplateHandler(_repoMock.Object);
+        }
 
         [Fact]
         public async Task Should_call_repository_method()
         {
-            var repo = new Mock<IAsyncRepository<ReportTemplate>>();
-            var command = CreateTestCommand();
-            var handler = new DeleteReportTemplateHandler(repo.Object);
+            await _handler.Handle(_command, CancellationToken.None);
 
-            await handler.Handle(command, CancellationToken.None);
-
-            repo.Verify(x => x.DeleteAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()));
+            _repoMock.Verify(x => x.DeleteAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()));
         }
 
         [Fact]
         public async Task Should_use_predefined_CancellationToken()
         {
-            var repo = new Mock<IAsyncRepository<ReportTemplate>>();
-            var command = CreateTestCommand();
-            var handler = new DeleteReportTemplateHandler(repo.Object);
             var token = new CancellationTokenSource().Token;
 
-            await handler.Handle(command, token);
+            await _handler.Handle(_command, token);
 
-            repo.Verify(x => x.DeleteAsync(It.IsAny<int>(), token));
+            _repoMock.Verify(x => x.DeleteAsync(It.IsAny<int>(), token));
         }
 
         [Fact]
         public async Task Should_correctly_map_command_fields()
         {
-            var repo = new Mock<IAsyncRepository<ReportTemplate>>();
-            var command = CreateTestCommand();
-            var handler = new DeleteReportTemplateHandler(repo.Object);
+            await _handler.Handle(_command, CancellationToken.None);
 
-            await handler.Handle(command, CancellationToken.None);
-
-            repo.Verify(x => x.DeleteAsync(TempalateId, It.IsAny<CancellationToken>()));
-        }
-
-        private DeleteReportTemplateCommand CreateTestCommand()
-        {
-            return new DeleteReportTemplateCommand()
-            {
-                Id = TempalateId
-            };
+            _repoMock.Verify(x => x.DeleteAsync(TempalateId, It.IsAny<CancellationToken>()));
         }
     }
 }

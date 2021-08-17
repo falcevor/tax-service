@@ -1,19 +1,17 @@
-﻿using AutoMapper;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TaxService.Application.Features.ReportTemplateFeature.Queries.GetAll;
-using TaxService.Application.Mappings;
 using TaxService.Application.Repositories;
 using TaxService.Domain.Model;
 using Xunit;
 
 namespace UnitTests.Application.Features.ReportTemplateFeature
 {
-    public class GetReportTemplatesTests
+    public class GetReportTemplatesTests : FeatureTestBase
     {
         private const int TemplateId = 13;
         private const string Description = "Description";
@@ -24,44 +22,43 @@ namespace UnitTests.Application.Features.ReportTemplateFeature
         private const string ParameterDescription = "user name";
         private const string ParameterDefaultValue = "Ivanov";
 
+        private Mock<IAsyncRepository<ReportTemplate>> _repoMock;
+        private GetReportTemplatesQuery _query;
+        private GetReportTemplatesHandler _handler;
+
+        public GetReportTemplatesTests()
+        {
+            _repoMock = new Mock<IAsyncRepository<ReportTemplate>>();
+            _query = new GetReportTemplatesQuery();
+            var mapper = ConfigureMapper();
+            _handler = new GetReportTemplatesHandler(_repoMock.Object, mapper);
+        }
+
         [Fact]
         public async Task Should_call_repository_method()
         {
-            var repo = new Mock<IAsyncRepository<ReportTemplate>>();
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new GetReportTemplatesHandler(repo.Object, mapper);
+            await _handler.Handle(_query, CancellationToken.None);
 
-            await handler.Handle(command, CancellationToken.None);
-
-            repo.Verify(x => x.GetAllAsync(It.IsAny<CancellationToken>()));
+            _repoMock.Verify(x => x.GetAllAsync(It.IsAny<CancellationToken>()));
         }
 
         [Fact]
         public async Task Should_use_predefined_CancellationToken()
         {
-            var repo = new Mock<IAsyncRepository<ReportTemplate>>();
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new GetReportTemplatesHandler(repo.Object, mapper);
             var predefinedCancellationToken = new CancellationTokenSource().Token;
 
-            await handler.Handle(command, predefinedCancellationToken);
+            await _handler.Handle(_query, predefinedCancellationToken);
 
-            repo.Verify(x => x.GetAllAsync(predefinedCancellationToken));
+            _repoMock.Verify(x => x.GetAllAsync(predefinedCancellationToken));
         }
 
         [Fact]
         public async Task Should_return_collection_with_correct_size()
         {
-            var repo = new Mock<IAsyncRepository<ReportTemplate>>();
-            repo.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
+            _repoMock.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(GetTestData().AsQueryable()));
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new GetReportTemplatesHandler(repo.Object, mapper);
 
-            var templates = await handler.Handle(command, CancellationToken.None);
+            var templates = await _handler.Handle(_query, CancellationToken.None);
 
             templates.Should().HaveCount(2);
         }
@@ -69,14 +66,10 @@ namespace UnitTests.Application.Features.ReportTemplateFeature
         [Fact]
         public async Task Should_correctly_map_response_fields()
         {
-            var repo = new Mock<IAsyncRepository<ReportTemplate>>();
-            repo.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
+            _repoMock.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(GetTestData().AsQueryable()));
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new GetReportTemplatesHandler(repo.Object, mapper);
 
-            var template = (await handler.Handle(command, CancellationToken.None)).First();
+            var template = (await _handler.Handle(_query, CancellationToken.None)).First();
 
             template.Id.Should().Be(TemplateId);
             template.Name.Should().Be(TemplateName);
@@ -87,19 +80,6 @@ namespace UnitTests.Application.Features.ReportTemplateFeature
             template.Parameters.First().Id.Should().Be(ParameterId);
             template.Parameters.First().Description.Should().Be(ParameterDescription);
             template.Parameters.First().Name.Should().Be(ParameterName);
-        }
-
-        public GetReportTemplatesQuery CreateTestCommand()
-        {
-            return new GetReportTemplatesQuery();
-        }
-
-        private IMapper ConfigureMapper()
-        {
-            var config = new MapperConfiguration(cfg =>
-                cfg.AddProfile<RequestMapperProfile>()
-            );
-            return new Mapper(config);
         }
 
         private IEnumerable<ReportTemplate> GetTestData()
