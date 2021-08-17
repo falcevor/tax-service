@@ -1,19 +1,17 @@
-﻿using AutoMapper;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TaxService.Application.Exceptions;
 using TaxService.Application.Features.ReportTemplateFeature.Queries.GetById;
-using TaxService.Application.Mappings;
 using TaxService.Application.Repositories;
 using TaxService.Domain.Model;
 using Xunit;
 
 namespace UnitTests.Application.Features.ReportTemplateFeature
 {
-    public class GetReportTemplateByIdTests
+    public class GetReportTemplateByIdTests : FeatureTestBase
     {
         private const int TemplateId = 13;
         private const string Description = "Description";
@@ -24,48 +22,51 @@ namespace UnitTests.Application.Features.ReportTemplateFeature
         private const string ParameterDescription = "user name";
         private const string ParameterDefaultValue = "Ivanov";
 
+        private Mock<IAsyncRepository<ReportTemplate>> _repoMock;
+        private GetReportTemplateByIdQuery _query;
+        private GetReportTemplateByIdHandler _handler;
+
+        public GetReportTemplateByIdTests()
+        {
+            _repoMock = new Mock<IAsyncRepository<ReportTemplate>>();
+            _query = new GetReportTemplateByIdQuery()
+            {
+                Id = 13
+            };
+            var mapper = ConfigureMapper();
+            _handler = new GetReportTemplateByIdHandler(_repoMock.Object, mapper);
+        }
+
         [Fact]
         public async Task Should_call_repository_method()
         {
-            var repo = new Mock<IAsyncRepository<ReportTemplate>>();
-            repo.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            _repoMock.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(GetTestData()));
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new GetReportTemplateByIdHandler(repo.Object, mapper);
 
-            await handler.Handle(command, CancellationToken.None);
+            await _handler.Handle(_query, CancellationToken.None);
 
-            repo.Verify(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()));
+            _repoMock.Verify(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()));
         }
 
         [Fact]
         public async Task Should_use_predefined_CancellationToken()
         {
-            var repo = new Mock<IAsyncRepository<ReportTemplate>>();
-            repo.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            _repoMock.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(GetTestData()));
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new GetReportTemplateByIdHandler(repo.Object, mapper);
             var predefinedCancellationToken = new CancellationTokenSource().Token;
 
-            await handler.Handle(command, predefinedCancellationToken);
+            await _handler.Handle(_query, predefinedCancellationToken);
 
-            repo.Verify(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()));
+            _repoMock.Verify(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()));
         }
 
         [Fact]
         public async Task Should_correctly_map_response_fields()
         {
-            var repo = new Mock<IAsyncRepository<ReportTemplate>>();
-            repo.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            _repoMock.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(GetTestData()));
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new GetReportTemplateByIdHandler(repo.Object, mapper);
 
-            var template = await handler.Handle(command, CancellationToken.None);
+            var template = await _handler.Handle(_query, CancellationToken.None);
 
             template.Id.Should().Be(TemplateId);
             template.Name.Should().Be(TemplateName);
@@ -81,30 +82,12 @@ namespace UnitTests.Application.Features.ReportTemplateFeature
         [Fact]
         public async Task Should_throw_NotFoundException_if_value_not_found()
         {
-            var repo = new Mock<IAsyncRepository<ReportTemplate>>();
-            var mapper = ConfigureMapper();
-            var command = CreateTestCommand();
-            var handler = new GetReportTemplateByIdHandler(repo.Object, mapper);
+            _repoMock.Setup(x => x.GetAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult((ReportTemplate)null));
 
-            await handler.Invoking(async x => await x.Handle(command, CancellationToken.None))
+            await _handler.Invoking(async x => await x.Handle(_query, CancellationToken.None))
                 .Should()
                 .ThrowAsync<NotFoundException>();
-        }
-
-        public GetReportTemplateByIdQuery CreateTestCommand()
-        {
-            return new GetReportTemplateByIdQuery() 
-            { 
-                Id = 13
-            };
-        }
-
-        private IMapper ConfigureMapper()
-        {
-            var config = new MapperConfiguration(cfg =>
-                cfg.AddProfile<RequestMapperProfile>()
-            );
-            return new Mapper(config);
         }
 
         private ReportTemplate GetTestData()

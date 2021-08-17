@@ -1,17 +1,15 @@
-﻿using AutoMapper;
-using Moq;
+﻿using Moq;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TaxService.Application.Features.ReportTemplateFeature.Commands.Create;
-using TaxService.Application.Mappings;
 using TaxService.Application.Repositories;
 using TaxService.Domain.Model;
 using Xunit;
 
 namespace UnitTests.Application.Features.ReportTemplateFeature
 {
-    public class CreateReportTemplateTests
+    public class CreateReportTemplateTests : FeatureTestBase
     {
         private const string Description = "Description";
         private const string TemplateName = "TemplateName";
@@ -20,44 +18,42 @@ namespace UnitTests.Application.Features.ReportTemplateFeature
         private const string ParameterDescription = "user name";
         private const string ParameterDefaultValue = "Ivanov";
 
+        private Mock<IAsyncRepository<ReportTemplate>> _repoMock;
+        private CreateReportTemplateCommand _command;
+        private CreateReportTemplateHandler _handler;
+
+        public CreateReportTemplateTests()
+        {
+            _repoMock = new Mock<IAsyncRepository<ReportTemplate>>();
+            _command = CreateTestCommand();
+            var mapper = ConfigureMapper();
+            _handler = new CreateReportTemplateHandler(_repoMock.Object, mapper);
+        }
+
         [Fact]
         public async Task Should_call_repository_method()
         {
-            var repo = new Mock<IAsyncRepository<ReportTemplate>>();
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new CreateReportTemplateHandler(repo.Object, mapper);
+            await _handler.Handle(_command, CancellationToken.None);
 
-            await handler.Handle(command, CancellationToken.None);
-
-            repo.Verify(x => x.CreateAsync(It.IsAny<ReportTemplate>(), It.IsAny<CancellationToken>()));
+            _repoMock.Verify(x => x.CreateAsync(It.IsAny<ReportTemplate>(), It.IsAny<CancellationToken>()));
         }
 
         [Fact]
         public async Task Should_use_predefined_CancellationToken()
         {
-            var repo = new Mock<IAsyncRepository<ReportTemplate>>();
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new CreateReportTemplateHandler(repo.Object, mapper);
             var token = new CancellationTokenSource().Token;
 
-            await handler.Handle(command, token);
+            await _handler.Handle(_command, token);
 
-            repo.Verify(x => x.CreateAsync(It.IsAny<ReportTemplate>(), token));
+            _repoMock.Verify(x => x.CreateAsync(It.IsAny<ReportTemplate>(), token));
         }
 
         [Fact]
         public async Task Should_correctly_map_command_fields()
         {
-            var repo = new Mock<IAsyncRepository<ReportTemplate>>();
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new CreateReportTemplateHandler(repo.Object, mapper);
+            await _handler.Handle(_command, CancellationToken.None);
 
-            await handler.Handle(command, CancellationToken.None);
-
-            repo.Verify(x => x.CreateAsync(
+            _repoMock.Verify(x => x.CreateAsync(
                 It.Is<ReportTemplate>(template =>
                     template.Description == Description
                     && template.Name == TemplateName
@@ -86,14 +82,6 @@ namespace UnitTests.Application.Features.ReportTemplateFeature
                     }
                 }
             };
-        }
-
-        private IMapper ConfigureMapper()
-        {
-            var config = new MapperConfiguration(cfg =>
-                cfg.AddProfile<RequestMapperProfile>()
-            );
-            return new Mapper(config);
         }
     }
 }

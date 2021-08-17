@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -7,14 +6,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TaxService.Application.Features.TaxpayerFeature.Queries.GetAll;
-using TaxService.Application.Mappings;
 using TaxService.Application.Repositories;
 using TaxService.Domain.Model;
 using Xunit;
 
 namespace UnitTests.Application.Features.TaxpayerFeature
 {
-    public class GetTaxpayersTests
+    public class GetTaxpayersTests : FeatureTestBase
     {
         private const string Name = "Name";
         private const string AdditionalInfo = "AdditionalInfo";
@@ -29,44 +27,43 @@ namespace UnitTests.Application.Features.TaxpayerFeature
         private const int TaxTypeId = 43;
         private DateTime BeginDate = DateTime.Now;
 
+        private Mock<IAsyncRepository<Taxpayer>> _repo;
+        private GetTaxpayersQuery _query;
+        private GetTaxpayersHandler _handler;
+
+        public GetTaxpayersTests()
+        {
+            _repo = new Mock<IAsyncRepository<Taxpayer>>();
+            _query = new GetTaxpayersQuery();
+            var mapper = ConfigureMapper();
+            _handler = new GetTaxpayersHandler(_repo.Object, mapper);
+        }
+
         [Fact]
         public async Task Should_call_repository_method()
         {
-            var repo = new Mock<IAsyncRepository<Taxpayer>>();
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new GetTaxpayersHandler(repo.Object, mapper);
+            await _handler.Handle(_query, CancellationToken.None);
 
-            await handler.Handle(command, CancellationToken.None);
-
-            repo.Verify(x => x.GetAllAsync(It.IsAny<CancellationToken>()));
+            _repo.Verify(x => x.GetAllAsync(It.IsAny<CancellationToken>()));
         }
 
         [Fact]
         public async Task Should_use_predefined_CancellationToken()
         {
-            var repo = new Mock<IAsyncRepository<Taxpayer>>();
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new GetTaxpayersHandler(repo.Object, mapper);
             var predefinedCancellationToken = new CancellationTokenSource().Token;
 
-            await handler.Handle(command, predefinedCancellationToken);
+            await _handler.Handle(_query, predefinedCancellationToken);
 
-            repo.Verify(x => x.GetAllAsync(predefinedCancellationToken));
+            _repo.Verify(x => x.GetAllAsync(predefinedCancellationToken));
         }
 
         [Fact]
         public async Task Should_return_collection_with_correct_size()
         {
-            var repo = new Mock<IAsyncRepository<Taxpayer>>();
-            repo.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
+            _repo.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(GetTestData().AsQueryable()));
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new GetTaxpayersHandler(repo.Object, mapper);
 
-            var templates = await handler.Handle(command, CancellationToken.None);
+            var templates = await _handler.Handle(_query, CancellationToken.None);
 
             templates.Should().HaveCount(2);
         }
@@ -74,14 +71,10 @@ namespace UnitTests.Application.Features.TaxpayerFeature
         [Fact]
         public async Task Should_correctly_map_response_fields()
         {
-            var repo = new Mock<IAsyncRepository<Taxpayer>>();
-            repo.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
+            _repo.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(GetTestData().AsQueryable()));
-            var command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            var handler = new GetTaxpayersHandler(repo.Object, mapper);
 
-            var taxpayer = (await handler.Handle(command, CancellationToken.None)).First();
+            var taxpayer = (await _handler.Handle(_query, CancellationToken.None)).First();
 
             taxpayer.Id.Should().Be(TaxpayerId);
             taxpayer.Name.Should().Be(Name);
@@ -95,19 +88,6 @@ namespace UnitTests.Application.Features.TaxpayerFeature
             taxpayer.PlaceAddress.Should().Be(PlaceAddress);
             taxpayer.PlaceTypeId.Should().Be(PlaceTypeId);
             taxpayer.TaxTypeId.Should().Be(TaxTypeId);
-        }
-
-        public GetTaxpayersQuery CreateTestCommand()
-        {
-            return new GetTaxpayersQuery();
-        }
-
-        private IMapper ConfigureMapper()
-        {
-            var config = new MapperConfiguration(cfg =>
-                cfg.AddProfile<RequestMapperProfile>()
-            );
-            return new Mapper(config);
         }
 
         private IEnumerable<Taxpayer> GetTestData()
