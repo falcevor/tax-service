@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\TaxService.Application\TaxService.Application.csproj" />
+    <ProjectReference Include="..\..\src\TaxService\TaxService.csproj" />
   </ItemGroup>
 
 </Project>
