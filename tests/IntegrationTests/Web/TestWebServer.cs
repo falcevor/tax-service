@@ -1,10 +1,12 @@
 ﻿using FunctionalTests.Web.TestData;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
+using System.Reflection;
 using TaxService;
 using TaxService.Data.DataContext;
 
@@ -20,7 +22,12 @@ namespace FunctionalTests.Web
             _appFactory = new WebApplicationFactory<Startup>().WithWebHostBuilder(o =>
             {
                 o.UseEnvironment("Testing");
-                o.UseSetting("UseInMemoryDatabase", "true");
+
+                o.ConfigureAppConfiguration(configBuilder => {
+                    configBuilder.Sources.Clear();
+                    configBuilder.AddUserSecrets(Assembly.GetExecutingAssembly());
+                    configBuilder.AddEnvironmentVariables();
+                    });
 
                 o.ConfigureServices(services =>
                 {

@@ -13,7 +13,7 @@ namespace TaxService.Data.DataContext
                 .AddUserSecrets(Assembly.GetExecutingAssembly())
                 .Build();
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+            builder.UseNpgsql(config.GetConnectionString("Default"));
             return new AppDbContext(builder.Options);
         }
     }
