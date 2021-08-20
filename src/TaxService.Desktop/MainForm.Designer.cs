@@ -41,31 +41,34 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.окноToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.MdiWindowListItem = this.окноToolStripMenuItem;
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1461, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(10, 3, 0, 3);
+            this.menuStrip1.Size = new System.Drawing.Size(2087, 35);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // окноToolStripMenuItem
             // 
             this.окноToolStripMenuItem.Name = "окноToolStripMenuItem";
-            this.окноToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.окноToolStripMenuItem.Size = new System.Drawing.Size(72, 29);
             this.окноToolStripMenuItem.Text = "Окно";
             // 
             // toolStrip1
             // 
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbtnTaxpayerList,
             this.tsbtnReportTemplateList,
             this.tsbtnAreaList});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 35);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1461, 25);
+            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.toolStrip1.Size = new System.Drawing.Size(2087, 33);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -75,7 +78,7 @@
             this.tsbtnTaxpayerList.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTaxpayerList.Image")));
             this.tsbtnTaxpayerList.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnTaxpayerList.Name = "tsbtnTaxpayerList";
-            this.tsbtnTaxpayerList.Size = new System.Drawing.Size(23, 22);
+            this.tsbtnTaxpayerList.Size = new System.Drawing.Size(34, 28);
             this.tsbtnTaxpayerList.Text = "Список налогаплательщиков";
             this.tsbtnTaxpayerList.Click += new System.EventHandler(this.tsbtnTaxpayerList_Click);
             // 
@@ -85,7 +88,7 @@
             this.tsbtnReportTemplateList.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnReportTemplateList.Image")));
             this.tsbtnReportTemplateList.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnReportTemplateList.Name = "tsbtnReportTemplateList";
-            this.tsbtnReportTemplateList.Size = new System.Drawing.Size(23, 22);
+            this.tsbtnReportTemplateList.Size = new System.Drawing.Size(34, 28);
             this.tsbtnReportTemplateList.Text = "Отчётность";
             this.tsbtnReportTemplateList.Click += new System.EventHandler(this.tsbtnReportTemplateList_Click);
             // 
@@ -95,19 +98,20 @@
             this.tsbtnAreaList.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnAreaList.Image")));
             this.tsbtnAreaList.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnAreaList.Name = "tsbtnAreaList";
-            this.tsbtnAreaList.Size = new System.Drawing.Size(23, 22);
+            this.tsbtnAreaList.Size = new System.Drawing.Size(34, 28);
             this.tsbtnAreaList.Text = "toolStripButton1";
+            this.tsbtnAreaList.Click += new System.EventHandler(this.tsbtnAreaList_Click);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1461, 906);
+            this.ClientSize = new System.Drawing.Size(2087, 1510);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Налогооблажение";

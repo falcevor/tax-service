@@ -57,34 +57,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing.Common" name="System.Drawing.Common, Version=5.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
-  <data name="tsbtnTaxpayerList.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>173, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tsbtnTaxpayerList.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC7SURBVGhD7dPBCYNQGANgR6k7dY4O0FO1dAS7qAPoEyK0
+        YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAC7SURBVGhD7dPBCYNQGANgR6k7dY4O0FO1dAS7qAPoEyK0
         EEo8lPxCPsjBqiGvYBcRERERUc/1dl8qBbN0rMQZzNKxEmcwS8dKnMGsiFCxD8kZzNKxEmcwS8dKnMEs
         HStxBrMiQsU+JGcwS8dKnMEsHStxBrN0rMQZzIqIf7hM86t/z8uRbO/g9RqOHKLc+F0/zU82+CvtGTxe
         089DVB+/a0NHMn7E7XNoo4ePAwz4+Vzav/7YgsuIerpuBY+1Uemcct+nAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="tsbtnReportTemplateList.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="tsbtnReportTemplateList.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHESURBVGhD7ZnNSkJRFIV9rAY9QoMo6gUStIZRVCOVSKGi
-        ic/QKFEaNbhIFFgS1KyaBNUDVPYCGSf2Bl0sYXuwexX2gm90YP3cKw7OzblcLtd0a79bOi4mhd7S+Up/
-        obWYCiFrPSn2Dm5Lh1IjTrtXWw8sIE1CB6kznsKTZ4ZZUO2Wa1LLrnyS/2ZmWVC4KHxJLbvwN994rvc7
-        76eUuZP5P9hZDGdP9aHs5cbqj9Sya9AgwIKUSQ8IYL7UsgsNWIjiAwiYL7XsQgMWovgAAuZLLbvQgIUo
-        MzFAS6YF5kstu9CAhfwnmC+17EKDl4/uSDSUncWC+VLLLjRgIYoPIGC+1LILDViI4gMImC+17EKD5mNl
-        JDqAncWC+VLLLjRgIcpMDGCvWdEB7CwWzJdadqEBC1F8AAHzpZZdaMBCFB9AwHypZRcasH8KRQews1gw
-        X2rZhQYsRJmJAew1KzqAncWC+VLLLjRgIYoPIGC+1LILDViIMpUD8Gqx/daiQYFJD2i/Noeyo64Ww/38
-        oEmWbCRrn1LLrtpN+YiZZUGtU6lKrfG0c7l5zwzTZO96+07qxCl8XAj382l/YgqZUR82XC6XK0Xlcr8x
-        JVDjJDVRrwAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAHFSURBVGhD7ZnNSkJRFIV9rAY9QoMo6gFC0BpGUY1UIoWK
+        Jj5DI0Np1OAiUWBJULNqElQPUNkLZJzYG3SxhO3B7lXYC77RgfVzrzg4N+dyuVzTrf1u6biYFHpL5yv9
+        hdZiKoSs9aTYO7gtHUqNOO1ebT2wgDQJHaTOeApPnhlmQbVbrkktu/JJ/puZZUHhovAltezC3/zZc73f
+        eT+lzJ3M/8HOYmg81YeylxurP1LLrkGDAAtSJj0ggPlSyy40YCGKDyBgvtSyCw1YiOIDCJgvtexCAxai
+        zMQALZkWmC+17EIDFvKfYL7UsgsNXj66I9FQdhYL5kstu9CAhSg+gID5UssuNGAhig8gYL7UsgsNmo+V
+        kegAdhYL5kstu9CAhSgzMYC9ZkUHsLNYMF9q2YUGLETxAQTMl1p2oQELUXwAAfOlll1owP4pFB3AzmLB
+        fKllFxqwEGUmBrDXrOgAdhYL5kstu9CAhSg+gID5UssuNGAhylQOwKvF9luLBgUmPaD92hzKjrpaDPfz
+        gyZZspGsfUotu2o35SNmlgW1TqUqtcbTzuXmPTNMk73r7TupE6fwcSHcz6f9iSlkRn3YcLlcrhSVy/0C
+        Bp1Q4Kmn3qkAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="tsbtnAreaList.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="tsbtnAreaList.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAnoAAAJ6CAYAAAC/qu8MAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAP+lSURBVHhezL1nuBzFtbatP997js+xfYxNBpEzQmQQIKGc
+        YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAP+lSURBVHhezL1nuBzFtbatP997js+xfYxNBpEzQmQQIKGc
         QSLnnHPOGYFERkgiI5KNc86YnMEmGpONyZico7TDfM9T1U/36jXVPTNbcN73x32trqpV1T0jac+tVd2z
         +x2/5jcadZyw1n/Vcvxa/xk4Ye1vNE5c578aJ6373yXYV8vayJkXUmtm6Pz2ek5e75uG/2qcvM43wH/0
         mZPW7Rsnr/efgdNwTSlOx/WR1Jjl1PW+kXPKuv8ZsH2nD8JaXwGnrf9fSU5d/z/mCa2j80zZ4JsB3/b9

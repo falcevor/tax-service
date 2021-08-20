@@ -11,5 +11,10 @@ namespace TaxService.Desktop.Area
         {
             InitializeComponent();
         }
+
+        private void btnSelectInspector_Click(object sender, System.EventArgs e)
+        {
+
+        }
     }
 }
