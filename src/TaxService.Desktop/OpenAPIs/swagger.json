@@ -5,6 +5,44 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/v1/Inspector/GetInspectors": {
+      "get": {
+        "tags": [
+          "Inspector"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetInspectorsResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetInspectorsResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetInspectorsResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/ReportTemplate/GetReportTempalates": {
       "get": {
         "tags": [
@@ -341,6 +379,10 @@
             "type": "string",
             "nullable": true
           },
+          "inspectorId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "inspector": {
             "$ref": "#/components/schemas/Inspector"
           },
@@ -448,6 +490,38 @@
           "file": {
             "type": "string",
             "format": "byte",
+            "nullable": true
+          },
+          "taxpayerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "taxpayer": {
+            "$ref": "#/components/schemas/Taxpayer"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetInspectorsResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "login": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "areas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Area"
+            },
             "nullable": true
           }
         },
@@ -613,6 +687,26 @@
           },
           "placeAddress": {
             "type": "string",
+            "nullable": true
+          },
+          "categoryId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "taxTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "placeTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "areaId": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           },
           "category": {
@@ -795,6 +889,26 @@
           },
           "placeAddress": {
             "type": "string",
+            "nullable": true
+          },
+          "categoryId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "taxTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "placeTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "areaId": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           },
           "category": {

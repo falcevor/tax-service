@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using TaxService.Application.Features.InspectorFeature.Queries.GetAll;
 using TaxService.Application.Features.ReportTemplateFeature.Commands.Create;
 using TaxService.Application.Features.ReportTemplateFeature.Commands.Update;
 using TaxService.Application.Features.ReportTemplateFeature.Queries.GetAll;
@@ -46,6 +47,8 @@ namespace TaxService.Application.Mappings
             CreateMap<UpdateReportTemplateCommand, ReportTemplate>();
             
             CreateMap<ReportTemplate, GetReportTemplateByIdResponse>();
+
+            CreateMap<Inspector, GetInspectorsResponse>();
         }
     }
 }

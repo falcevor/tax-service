@@ -1,4 +1,4 @@
-﻿using FunctionalTests.Web.TestData;
+﻿using IntegrationTests.Web.TestData;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +10,7 @@ using System.Reflection;
 using TaxService;
 using TaxService.Data.DataContext;
 
-namespace FunctionalTests.Web
+namespace IntegrationTests.Web
 {
     public class TestWebServer : IDisposable
     {
@@ -46,6 +46,7 @@ namespace FunctionalTests.Web
                             try
                             {
                                 TaxpayerSeed.SeedAsync(db).Wait();
+                                InspectorSeed.SeedAsync(db).Wait();
                             }
                             catch (Exception ex)
                             {

@@ -19,6 +19,7 @@ namespace TaxService.Data.Extensions
             services.AddTransient<IAsyncRepository<Taxpayer>, TaxpayerRepository>();
             services.AddTransient<IAsyncRepository<ReportTemplate>, ReportTemplateRepository>();
             services.AddTransient<IAsyncRepository<Area>, AreaRepository>();
+            services.AddTransient<IAsyncRepository<Inspector>, InspectorRepository>();
 
             return services;
         }

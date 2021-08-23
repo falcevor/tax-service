@@ -8,7 +8,7 @@ using FluentAssertions;
 using TaxService.Application.Features.TaxpayerFeature.Queries.GetAll;
 using System.Collections.Generic;
 
-namespace FunctionalTests.Web.v1.Controllers
+namespace IntegrationTests.Web.v1.Controllers
 {
     [Collection("TaxpayerFeature")]
     public class TaxpayerControllerTests : IClassFixture<TestWebServer>

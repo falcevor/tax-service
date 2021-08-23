@@ -10,6 +10,7 @@ namespace TaxService.Data.DataContext
         public DbSet<Income> Incomes { get; private set; }
         public DbSet<ReportTemplate> ReportTemplates { get; private set; }
         public DbSet<Taxpayer> Taxpayers { get; private set; }
+        public DbSet<Inspector> Inspectors { get; private set; }
 
         public AppDbContext(DbContextOptions options) : base(options) { }
     }

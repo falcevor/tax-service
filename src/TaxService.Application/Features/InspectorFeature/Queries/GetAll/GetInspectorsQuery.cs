@@ -1,12 +1,9 @@
-﻿using System;
+﻿using MediatR;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TaxService.Application.Features.InspectorFeature.Queries.GetAll
 {
-    public class GetInspectorsQuery : 
+    public class GetInspectorsQuery : IRequest<IEnumerable<GetInspectorsResponse>>
     {
     }
 }
