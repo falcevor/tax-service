@@ -8,20 +8,16 @@ using Xunit;
 
 namespace UnitTests.Application.Features.AreaFeature
 {
-    [Collection("TaxpayerFeature")]
-    public class CreateAreaTests : FeatureTestBase
+    [Collection("FeatureTests")]
+    public class CreateAreaTests
     {
         private const string District = "District 9";
         private const int InspectorId = 12;
 
-        private Mock<IAsyncRepository<Area>> _repoMock;
         private CreateAreaCommand _command;
-        private CreateAreaHandler _handler;
 
-        public CreateAreaTests()
+        public CreateAreaTests(FeatureTestsContext context)
         {
-            _repoMock = new Mock<IAsyncRepository<Area>>();
-            _handler = new CreateAreaHandler(_repoMock.Object);
             _command = new CreateAreaCommand()
             {
                 Name = District,
@@ -32,27 +28,34 @@ namespace UnitTests.Application.Features.AreaFeature
         [Fact]
         public async Task Should_call_repository_method()
         {
-            await _handler.Handle(_command, CancellationToken.None);
+            var repoMock = new Mock<IAsyncRepository<Area>>();
+            var handler = new CreateAreaHandler(repoMock.Object);
 
-            _repoMock.Verify(x => x.CreateAsync(It.IsAny<Area>(), It.IsAny<CancellationToken>()), Times.Once());
+            await handler.Handle(_command, CancellationToken.None);
+
+            repoMock.Verify(x => x.CreateAsync(It.IsAny<Area>(), It.IsAny<CancellationToken>()), Times.Once());
         }
 
         [Fact]
         public async Task Should_use_predefined_CancellationToken()
         {
+            var repoMock = new Mock<IAsyncRepository<Area>>();
+            var handler = new CreateAreaHandler(repoMock.Object);
             var predefinedCancellationToken = new CancellationTokenSource().Token;
 
-            await _handler.Handle(_command, predefinedCancellationToken);
+            await handler.Handle(_command, predefinedCancellationToken);
 
-            _repoMock.Verify(x => x.CreateAsync(It.IsAny<Area>(), predefinedCancellationToken));
+            repoMock.Verify(x => x.CreateAsync(It.IsAny<Area>(), predefinedCancellationToken));
         }
 
         [Fact]
         public async Task Should_correctly_map_command_fields()
         {
-            await _handler.Handle(_command, CancellationToken.None);
+            var repoMock = new Mock<IAsyncRepository<Area>>();
+            var handler = new CreateAreaHandler(repoMock.Object);
+            await handler.Handle(_command, CancellationToken.None);
 
-            _repoMock.Verify(x => 
+            repoMock.Verify(x => 
                 x.CreateAsync(It.Is<Area>(x => x.InspectorId == InspectorId && x.Name == District), 
                 CancellationToken.None)
             );

@@ -3,9 +3,16 @@ using TaxService.Application.Mappings;
 
 namespace UnitTests.Application.Features
 {
-    public class FeatureTestBase
+    public class FeatureTestsContext
     {
-        protected IMapper ConfigureMapper()
+        public IMapper Mapper { get; private set; }
+
+        public FeatureTestsContext()
+        {
+            Mapper = ConfigureMapper();
+        }
+
+        private IMapper ConfigureMapper()
         {
             var config = new MapperConfiguration(cfg =>
                 cfg.AddProfile<RequestMapperProfile>()

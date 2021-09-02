@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using AutoMapper;
+using FluentAssertions;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,8 @@ using Xunit;
 
 namespace UnitTests.Application.Features.ReportTemplateFeature
 {
-    public class GetReportTemplatesTests : FeatureTestBase
+    [Collection("FeatureTests")]
+    public class GetReportTemplatesTests
     {
         private const int TemplateId = 13;
         private const string Description = "Description";
@@ -22,43 +24,47 @@ namespace UnitTests.Application.Features.ReportTemplateFeature
         private const string ParameterDescription = "user name";
         private const string ParameterDefaultValue = "Ivanov";
 
-        private Mock<IAsyncRepository<ReportTemplate>> _repoMock;
         private GetReportTemplatesQuery _query;
-        private GetReportTemplatesHandler _handler;
+        private IMapper _mapper;
 
-        public GetReportTemplatesTests()
+        public GetReportTemplatesTests(FeatureTestsContext context)
         {
-            _repoMock = new Mock<IAsyncRepository<ReportTemplate>>();
+            _mapper = context.Mapper;
             _query = new GetReportTemplatesQuery();
-            var mapper = ConfigureMapper();
-            _handler = new GetReportTemplatesHandler(_repoMock.Object, mapper);
         }
 
         [Fact]
         public async Task Should_call_repository_method()
         {
-            await _handler.Handle(_query, CancellationToken.None);
+            var repoMock = new Mock<IAsyncRepository<ReportTemplate>>();
+            var handler = new GetReportTemplatesHandler(repoMock.Object, _mapper);
 
-            _repoMock.Verify(x => x.GetAllAsync(It.IsAny<CancellationToken>()));
+            await handler.Handle(_query, CancellationToken.None);
+
+            repoMock.Verify(x => x.GetAllAsync(It.IsAny<CancellationToken>()));
         }
 
         [Fact]
         public async Task Should_use_predefined_CancellationToken()
         {
+            var repoMock = new Mock<IAsyncRepository<ReportTemplate>>();
+            var handler = new GetReportTemplatesHandler(repoMock.Object, _mapper);
             var predefinedCancellationToken = new CancellationTokenSource().Token;
 
-            await _handler.Handle(_query, predefinedCancellationToken);
+            await handler.Handle(_query, predefinedCancellationToken);
 
-            _repoMock.Verify(x => x.GetAllAsync(predefinedCancellationToken));
+            repoMock.Verify(x => x.GetAllAsync(predefinedCancellationToken));
         }
 
         [Fact]
         public async Task Should_return_collection_with_correct_size()
         {
-            _repoMock.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
+            var repoMock = new Mock<IAsyncRepository<ReportTemplate>>();
+            var handler = new GetReportTemplatesHandler(repoMock.Object, _mapper);
+            repoMock.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(GetTestData().AsQueryable()));
 
-            var templates = await _handler.Handle(_query, CancellationToken.None);
+            var templates = await handler.Handle(_query, CancellationToken.None);
 
             templates.Should().HaveCount(2);
         }
@@ -66,10 +72,12 @@ namespace UnitTests.Application.Features.ReportTemplateFeature
         [Fact]
         public async Task Should_correctly_map_response_fields()
         {
-            _repoMock.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
+            var repoMock = new Mock<IAsyncRepository<ReportTemplate>>();
+            var handler = new GetReportTemplatesHandler(repoMock.Object, _mapper);
+            repoMock.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(GetTestData().AsQueryable()));
 
-            var template = (await _handler.Handle(_query, CancellationToken.None)).First();
+            var template = (await handler.Handle(_query, CancellationToken.None)).First();
 
             template.Id.Should().Be(TemplateId);
             template.Name.Should().Be(TemplateName);

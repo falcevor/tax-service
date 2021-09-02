@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using AutoMapper;
+using Moq;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,7 +10,8 @@ using Xunit;
 
 namespace UnitTests.Application.Features.ReportTemplateFeature
 {
-    public class UpdateReportTemplateTests : FeatureTestBase
+    [Collection("FeatureTests")]
+    public class UpdateReportTemplateTests
     {
         private const string Description = "Description";
         private const string TemplateName = "TemplateName";
@@ -18,43 +20,47 @@ namespace UnitTests.Application.Features.ReportTemplateFeature
         private const string ParameterDescription = "user name";
         private const string ParameterDefaultValue = "Ivanov";
 
-        private Mock<IAsyncRepository<ReportTemplate>> _repoMock;
         private UpdateReportTemplateCommand _command;
-        private UpdateReportTemplateHandler _handler;
+        private IMapper _mapper;
 
-        public UpdateReportTemplateTests()
+        public UpdateReportTemplateTests(FeatureTestsContext context)
         {
-            _repoMock = new Mock<IAsyncRepository<ReportTemplate>>();
+            _mapper = context.Mapper;
             _command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            _handler = new UpdateReportTemplateHandler(_repoMock.Object, mapper);
         }
-
 
         [Fact]
         public async Task Should_call_repository_method()
         {
-            await _handler.Handle(_command, CancellationToken.None);
+            var repoMock = new Mock<IAsyncRepository<ReportTemplate>>();
+            var handler = new UpdateReportTemplateHandler(repoMock.Object, _mapper);
 
-            _repoMock.Verify(x => x.UpdateAsync(It.IsAny<ReportTemplate>(), It.IsAny<CancellationToken>()));
+            await handler.Handle(_command, CancellationToken.None);
+
+            repoMock.Verify(x => x.UpdateAsync(It.IsAny<ReportTemplate>(), It.IsAny<CancellationToken>()));
         }
 
         [Fact]
         public async Task Should_use_predefined_CancellationToken()
         {
+            var repoMock = new Mock<IAsyncRepository<ReportTemplate>>();
+            var handler = new UpdateReportTemplateHandler(repoMock.Object, _mapper);
             var token = new CancellationTokenSource().Token;
 
-            await _handler.Handle(_command, token);
+            await handler.Handle(_command, token);
 
-            _repoMock.Verify(x => x.UpdateAsync(It.IsAny<ReportTemplate>(), token));
+            repoMock.Verify(x => x.UpdateAsync(It.IsAny<ReportTemplate>(), token));
         }
 
         [Fact]
         public async Task Should_correctly_map_command_fields()
         {
-            await _handler.Handle(_command, CancellationToken.None);
+            var repoMock = new Mock<IAsyncRepository<ReportTemplate>>();
+            var handler = new UpdateReportTemplateHandler(repoMock.Object, _mapper);
 
-            _repoMock.Verify(x => x.UpdateAsync(
+            await handler.Handle(_command, CancellationToken.None);
+
+            repoMock.Verify(x => x.UpdateAsync(
                 It.Is<ReportTemplate>(template =>
                     template.Description == Description
                     && template.Name == TemplateName

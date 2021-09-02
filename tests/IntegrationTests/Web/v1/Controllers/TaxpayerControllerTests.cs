@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace IntegrationTests.Web.v1.Controllers
 {
-    [Collection("TaxpayerFeature")]
-    public class TaxpayerControllerTests : IClassFixture<TestWebServer>
+    [Collection("WebTests")]
+    public class TaxpayerControllerTests
     {
         private readonly HttpClient _client;
         private readonly string _controllerUrl = "/api/v1/Taxpayer";

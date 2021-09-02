@@ -1,5 +1,7 @@
-﻿using FluentAssertions;
+﻿using AutoMapper;
+using FluentAssertions;
 using Moq;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,38 +12,57 @@ using Xunit;
 
 namespace UnitTests.Application.Features.InspectorFeature
 {
-    public class GetInspectorsTests : FeatureTestBase
+    [Collection("FeatureTests")]
+    public class GetInspectorsTests
     {
-        private Mock<IAsyncRepository<Inspector>> _repoMock;
         private GetInspectorsQuery _query;
-        private GetInspectorsHandler _handler;
+        private IMapper _mapper;
 
-        public GetInspectorsTests()
+        public GetInspectorsTests(FeatureTestsContext context)
         {
-            _repoMock = new Mock<IAsyncRepository<Inspector>>();
+            _mapper = context.Mapper;
             _query = new GetInspectorsQuery();
-            _handler = new GetInspectorsHandler(_repoMock.Object, ConfigureMapper());
         }
 
         [Fact]
         public async Task Sould_call_repo_method()
         {
-            await _handler.Handle(_query, CancellationToken.None);
-            _repoMock.Verify(x => x.GetAllAsync(It.IsAny<CancellationToken>()), Times.Once);
+            var repoMock = new Mock<IAsyncRepository<Inspector>>();
+            var handler = new GetInspectorsHandler(repoMock.Object, _mapper);
+            
+            await handler.Handle(_query, CancellationToken.None);
+            repoMock.Verify(x => x.GetAllAsync(It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Fact]
         public async Task Sould_use_predefined_CancellationToken()
         {
+            var repoMock = new Mock<IAsyncRepository<Inspector>>();
+            var handler = new GetInspectorsHandler(repoMock.Object, _mapper);
             var token = new CancellationTokenSource().Token;
-            await _handler.Handle(_query, token);
-            _repoMock.Verify(x => x.GetAllAsync(token), Times.Once);
+
+            await handler.Handle(_query, token);
+
+            repoMock.Verify(x => x.GetAllAsync(token), Times.Once);
         }
 
         [Fact]
         public async Task Sould_correctrly_map_response_fields()
         {
-            var source = new Inspector[]
+            var repoMock = new Mock<IAsyncRepository<Inspector>>();
+            var handler = new GetInspectorsHandler(repoMock.Object, _mapper);
+            var source = GetTestInspectors();
+            repoMock.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(source.AsQueryable()));
+
+            var result = await handler.Handle(_query, CancellationToken.None);
+
+            result.Should().BeEquivalentTo(source);
+        }
+
+        private IEnumerable<Inspector> GetTestInspectors()
+        {
+            return new Inspector[]
             {
                 new Inspector() {
                     Id = 1,
@@ -54,12 +75,6 @@ namespace UnitTests.Application.Features.InspectorFeature
                     Password = "FakePassword2"
                 }
             };
-            _repoMock.Setup(x => x.GetAllAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(source.AsQueryable()));
-
-            var result = await _handler.Handle(_query, CancellationToken.None);
-
-            result.Should().BeEquivalentTo(source);
         }
     }
 }

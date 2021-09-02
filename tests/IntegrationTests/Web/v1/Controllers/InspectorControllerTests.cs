@@ -9,8 +9,8 @@ using Xunit;
 
 namespace IntegrationTests.Web.v1.Controllers
 {
-    [Collection("Inspector Feature")]
-    public class InspectorControllerTests : IClassFixture<TestWebServer>
+    [Collection("WebTests")]
+    public class InspectorControllerTests
     {
         private readonly HttpClient _client;
         private readonly string _controllerUrl = "/api/v1/Inspector";

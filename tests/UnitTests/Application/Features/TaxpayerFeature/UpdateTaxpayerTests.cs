@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using AutoMapper;
+using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,7 +10,8 @@ using Xunit;
 
 namespace UnitTests.Application.Features.TaxpayerFeature
 {
-    public class UpdateTaxpayerTests : FeatureTestBase
+    [Collection("FeatureTests")]
+    public class UpdateTaxpayerTests
     {
         private const string Name = "Name";
         private const string AdditionalInfo = "AdditionalInfo";
@@ -23,42 +25,46 @@ namespace UnitTests.Application.Features.TaxpayerFeature
         private const int TaxTypeId = 43;
         private DateTime BeginDate = DateTime.Now;
 
-        private Mock<IAsyncRepository<Taxpayer>> _repoMock;
         private UpdateTaxpayerCommand _command;
-        private UpdateTaxpayerHandler _handler;
+        private IMapper _mapper;
 
-        public UpdateTaxpayerTests()
+        public UpdateTaxpayerTests(FeatureTestsContext context)
         {
-            _repoMock = new Mock<IAsyncRepository<Taxpayer>>();
+            _mapper = context.Mapper;
             _command = CreateTestCommand();
-            var mapper = ConfigureMapper();
-            _handler = new UpdateTaxpayerHandler(_repoMock.Object, mapper);
         }
 
         [Fact]
         public async Task Should_call_repository_method()
         {
-            await _handler.Handle(_command, CancellationToken.None);
+            var repoMock = new Mock<IAsyncRepository<Taxpayer>>();
+            var handler = new UpdateTaxpayerHandler(repoMock.Object, _mapper);
 
-            _repoMock.Verify(x => x.UpdateAsync(It.IsAny<Taxpayer>(), It.IsAny<CancellationToken>()));
+            await handler.Handle(_command, CancellationToken.None);
+
+            repoMock.Verify(x => x.UpdateAsync(It.IsAny<Taxpayer>(), It.IsAny<CancellationToken>()));
         }
 
         [Fact]
         public async Task Should_use_predefined_CancellationToken()
         {
+            var repoMock = new Mock<IAsyncRepository<Taxpayer>>();
+            var handler = new UpdateTaxpayerHandler(repoMock.Object, _mapper);
             var token = new CancellationTokenSource().Token;
 
-            await _handler.Handle(_command, token);
+            await handler.Handle(_command, token);
 
-            _repoMock.Verify(x => x.UpdateAsync(It.IsAny<Taxpayer>(), token));
+            repoMock.Verify(x => x.UpdateAsync(It.IsAny<Taxpayer>(), token));
         }
 
         [Fact]
         public async Task Should_correctly_map_command_fields()
         {
-            await _handler.Handle(_command, CancellationToken.None);
+            var repoMock = new Mock<IAsyncRepository<Taxpayer>>();
+            var handler = new UpdateTaxpayerHandler(repoMock.Object, _mapper);
+            await handler.Handle(_command, CancellationToken.None);
 
-            _repoMock.Verify(x => x.UpdateAsync(
+            repoMock.Verify(x => x.UpdateAsync(
                 It.Is<Taxpayer>(taxpayer =>
                        taxpayer.Name == Name
                     && taxpayer.AdditionalInfo == AdditionalInfo
